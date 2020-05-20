@@ -150,7 +150,7 @@
   					<h2>找回密码<a href="javascript:;" class="pull-right fz16" id="pwdlogin">返回登录</a></h2>
   				</div>
   				<div class="tabs_container">
-					<form class="tabs_form" action="https://rpg.blue/member.php?mod=logging&action=login" method="post" id="resetpwd_form">
+					<form class="tabs_form" action="ResetServlet" method="post" id="resetpwd_form">
 						<div class="form-group">
 							<div class="input-group">
 								<div class="input-group-addon">
@@ -180,7 +180,7 @@
 						<div class="form-group">
 							<div class="error_msg" id="resetpwd_error"></div>
 						</div>
-	                    <button class="btn btn-large btn-primary btn-lg btn-block submit" id="resetpwd_submit" type="button">重置密码</button>
+	                    <button class="btn btn-large btn-primary btn-lg btn-block submit" id="resetpwd_submit" type="submit">重置密码</button>
                     </form>
                     <div class="tabs_div">
 	                    <div class="success-box">
@@ -260,6 +260,8 @@
 									error.html(msgtemp('<strong>登录名或者登录密码输入错误</strong>',    'alert-warning'));
 								} else if(statusData.status == "0" && statusData.type == "register") {
 									error.html(msgtemp('<strong>此手机号已被注册</strong>',    'alert-warning'));
+								} else if(statusData.status == "0" && statusData.type == "reset") {
+									error.html(msgtemp('<strong>此手机号未被注册</strong>',    'alert-warning'));
 								}
 							},
 							error:function(data){

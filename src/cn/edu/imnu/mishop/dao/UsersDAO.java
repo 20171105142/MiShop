@@ -52,6 +52,24 @@ import cn.edu.imnu.mishop.util.DBUtil;
 				DBUtil.closeJDBC(null, pstmt, conn);
 			}
 		}
+		public void reset(String phone, String password) {
+			// TODO Auto-generated method stub
+			Connection conn = DBUtil.getConnection();
+			PreparedStatement pstmt = null; 
+			String sql = "update tb_users set users_password=? where users_phone=?";
+			
+			try {
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, password);
+				pstmt.setString(2, phone);
+				pstmt.executeUpdate();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} finally {
+				DBUtil.closeJDBC(null, pstmt, conn);
+			}
+		}
 	
 		public int login(String phone, String password) {
 			// TODO Auto-generated method stub
