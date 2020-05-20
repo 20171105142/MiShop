@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.alibaba.fastjson.JSONObject;
+
 import cn.edu.imnu.mishop.dao.UsersDAO;
 
 
@@ -37,22 +39,26 @@ public class RegisterServlet extends HttpServlet {
 		String password = request.getParameter("password");
 		
 		PrintWriter out = response.getWriter();
+		JSONObject object1 = new JSONObject();
 		
 		UsersDAO dao = new UsersDAO();
 		boolean flag = dao.isExistPhone(phone);
-		
+		object1.put("type", "register");
 		if (flag) {
-			out.print("<script type='text/javascript'>");
-			out.print("alert('此用户名已被注册');");
-			out.print("window.location='login.jsp?p=register';");
-			out.print("</script>");
+//			out.print("<script type='text/javascript'>");
+//			out.print("alert('此用户名已被注册');");
+//			out.print("window.location='login.jsp?p=register';");
+//			out.print("</script>");
+			object1.put("status", "0");
 		} else {
 			dao.save(phone,password);
-			out.print("<script type='text/javascript'>");
-			out.print("alert('注册成功');");
-			out.print("window.location='login.jsp';");
-			out.print("</script>");
+//			out.print("<script type='text/javascript'>");
+//			out.print("alert('注册成功');");
+//			out.print("window.location='login.jsp';");
+//			out.print("</script>");
+			object1.put("status", "1");
 		}
+		out.write(object1.toJSONString());
 	}
 
 	/**

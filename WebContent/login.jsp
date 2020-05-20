@@ -33,7 +33,7 @@
 								<div class="input-group-addon">
 									<span class="glyphicon glyphicon-phone" aria-hidden="true"></span>
 								</div>
-								<input class="form-control phone" name="phone" id="login_phone" required oninput = "value=value.replace(/[^\d]/g,'')" placeholder="手机号" maxlength="11" autocomplete="off" type="text">
+								<input class="form-control phone" name="phone" id="login_phone" required placeholder="手机号" maxlength="11" autocomplete="off" type="text">
 							</div>
 						</div>
 						<div class="form-group">
@@ -41,13 +41,13 @@
 								<div class="input-group-addon">
 									<span class="glyphicon glyphicon-lock" aria-hidden="true"></span>
 								</div>
-								<input class="form-control password loginPassword" name="password" id="login_pwd" placeholder="请输入密码" autocomplete="off" type="password">
+								<input class="form-control password" name="password" id="login_pwd" placeholder="请输入密码" autocomplete="off" type="password">
 								<div class="input-group-addon pwd-toggle" title="显示密码"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></div>
 							</div>
 						</div>
 						<div class="checkbox">
 	                        <label>
-	                        	<input id="login_checkbox" type="checkbox"><i></i> 30天内免登录
+	                        	<input checked="" id="login_checkbox" type="checkbox"><i></i> 30天内免登录
 	                        </label>
 	                        <a href="javascript:;" class="pull-right" id="resetpwd">忘记密码？</a>
 	                    </div>
@@ -56,13 +56,13 @@
 							<div class="error_msg" id="login_error">
 								<!-- 错误信息 范例html
 								<div class="alert alert-warning alert-dismissible fade in" role="alert">
-									<button type="button" class="close" data-dismiss="alert" aria-label="Close" ><span aria-hidden="true">&times;</span></button>
+									<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 									<strong>密码错误</strong> 请重新输入密码
 								</div>
 								 -->
 							</div>
 						</div>
-	                    <button class="invalidBtn btn btn-large btn-primary btn-lg btn-block" id="login_submit" type="submit">登录</button><br>
+	                    <button class="btn btn-large btn-primary btn-lg btn-block submit" id="login_submit" type="submit">登录</button><br>
 	                    <p class="text-center">没有账号？<a href="javascript:;" id="register">免费注册</a></p>
                     </form>
                     <div class="tabs_div">
@@ -95,7 +95,7 @@
 								<div class="input-group-addon">
 									<span class="glyphicon glyphicon-phone" aria-hidden="true"></span>
 								</div>
-								<input class="form-control phone" name="phone" id="register_phone" required oninput = "value=value.replace(/[^\d]/g,'')" placeholder="手机号" maxlength="11" autocomplete="off" type="text">
+								<input class="form-control phone" name="phone" id="register_phone" required placeholder="手机号" maxlength="11" autocomplete="off" type="text">
 							</div>
 						</div>
 						<div class="form-group">
@@ -111,20 +111,20 @@
 								<div class="input-group-addon">
 									<span class="glyphicon glyphicon-lock" aria-hidden="true"></span>
 								</div>
-								<input class="form-control password checkPassword" name="password" id="register_pwd" placeholder="请输入密码" autocomplete="off" type="password">
+								<input class="form-control password" name="password" id="register_pwd" placeholder="请输入密码" autocomplete="off" type="password">
 								<div class="input-group-addon pwd-toggle" title="显示密码"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></div>
 							</div>
 						</div>
 						<div class="checkbox">
 	                        <label>
-	                        	<input  id="register_checkbox" type="checkbox"><i></i> 同意<a href="temp_article/udai_article3.html">U袋网用户协议</a>
+	                        	<input checked="" id="register_checkbox" type="checkbox"><i></i> 同意<a href="temp_article/udai_article3.html">U袋网用户协议</a>
 	                        </label>
 	                    </div>
 	                    <!-- 错误信息 -->
 						<div class="form-group">
 							<div class="error_msg" id="register_error"></div>
 						</div>
-	                    <button class="btn btn-large btn-primary btn-lg btn-block invalidBtn"  οnkeyup="value=value.replace(/[\u4e00-\u9fa5]/ig,'')" id="register_submit" type="submit">注册</button>
+	                    <button class="btn btn-large btn-primary btn-lg btn-block submit" id="register_submit" type="submit">注册</button>
                     </form>
                     <div class="tabs_div">
 	                    <div class="success-box">
@@ -156,7 +156,7 @@
 								<div class="input-group-addon">
 									<span class="glyphicon glyphicon-phone" aria-hidden="true"></span>
 								</div>
-								<input class="form-control phone" name="phone" oninput = "value=value.replace(/[^\d]/g,'')" id="resetpwd_phone" required placeholder="手机号" maxlength="11" autocomplete="off" type="text">
+								<input class="form-control phone" name="phone" id="resetpwd_phone" required placeholder="手机号" maxlength="11" autocomplete="off" type="text">
 							</div>
 						</div>
 						<div class="form-group">
@@ -172,7 +172,7 @@
 								<div class="input-group-addon">
 									<span class="glyphicon glyphicon-lock" aria-hidden="true"></span>
 								</div>
-								<input class="form-control password checkPassword" name="password" id="resetpwd_pwd" placeholder="新的密码" autocomplete="off" type="password">
+								<input class="form-control password" name="password" id="resetpwd_pwd" placeholder="新的密码" autocomplete="off" type="password">
 								<div class="input-group-addon pwd-toggle" title="显示密码"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></div>
 							</div>
 						</div>
@@ -180,7 +180,7 @@
 						<div class="form-group">
 							<div class="error_msg" id="resetpwd_error"></div>
 						</div>
-	                    <button class="invalidBtn btn btn-large btn-primary btn-lg btn-block" id="resetpwd_submit" type="button">重置密码</button>
+	                    <button class="btn btn-large btn-primary btn-lg btn-block submit" id="resetpwd_submit" type="button">重置密码</button>
                     </form>
                     <div class="tabs_div">
 	                    <div class="success-box">
@@ -225,105 +225,53 @@
 						}
 					});
 					// 以下确定按钮仅供参考
-					//check phone
-					$('.phone').blur(function() {
-						var form = $(this).parents('form');
-						var phone = form.find('input.phone');
+					$('.submit').click(function() {
+						var form = $(this).parents('form')
+						var success = form.siblings('.tabs_div');
 						var error = form.find('.error_msg');
-						switch(phone.validatemobile()) {
-							case 1: 
-								error.html(msgtemp('<strong>手机号码为空</strong> 请输入手机号码',    'alert-warning')); 
-								$(".invalidBtn").attr('disabled',true);
-								return; break;
-							case 2: 
-								error.html(msgtemp('<strong>手机号码错误</strong> 请输入11位数的号码','alert-warning')); 
-								$(".invalidBtn").attr('disabled',true);
-								return; break;
-							case 3: error.html(msgtemp('<strong>手机号码错误</strong> 请输入正确的号码',  'alert-warning')); 
-								$(".invalidBtn").attr('disabled',true);
-								return; break;
-							default:
-								$(".invalidBtn").attr('disabled',false);
-								$(".close").trigger("click");
-							
+						var options = {
+							timeout:6000,
+							beforeSubmit: function () {
+								console.log('喵喵喵')
+								var phone = form.find('input.phone');
+								var pwd = form.find('input.password');
+								switch(phone.validatemobile()) {
+									case 1: error.html(msgtemp('<strong>手机号码为空</strong> 请输入手机号码',    'alert-warning')); return false; break;
+									case 2: error.html(msgtemp('<strong>手机号码错误</strong> 请输入11位数的号码','alert-warning')); return false; break;
+									case 3: error.html(msgtemp('<strong>手机号码错误</strong> 请输入正确的号码',  'alert-warning')); return false; break;
+									
+								}
+							// 验证密码复杂度参考这个
+								switch(pwd.validatepwd()) {
+									case 1: error.html(msgtemp('<strong>密码不能为空</strong> 请输入密码',    'alert-warning')); return false; break;
+									case 2: error.html(msgtemp('<strong>密码过短</strong> 请输入6位以上的密码','alert-warning')); return false; break;
+									case 3: error.html(msgtemp('<strong>密码过于简单</strong><br>密码需为字母、数字或特殊字符组合',  'alert-warning')); return false; break;
+									
+								}
+							},
+							success: function (data) {
+								console.log("success",data)
+								var statusData = eval("(" + data + ")")
+								if(statusData.status == "1"){
+									form.fadeOut(150,function() {
+									 	success.fadeIn(150);
+									});
+								} else if(statusData.status == "0" && statusData.type == "login") {
+									error.html(msgtemp('<strong>登录名或者登录密码输入错误</strong>',    'alert-warning'));
+								} else if(statusData.status == "0" && statusData.type == "register") {
+									error.html(msgtemp('<strong>此手机号已被注册</strong>',    'alert-warning'));
+								}
+							},
+							error:function(data){
+								console.log("error",data)
+							}
 						}
-					});
-					//check password
-					$('.loginPassword').blur(function() {
-						var form = $(this).parents('form');
-						var pwd = form.find('input.password');
-						var error = form.find('.error_msg');
-						switch(pwd.validatepwd()) {
-							case 1: 
-								error.html(msgtemp('<strong>密码不能为空</strong> 请输入密码',    'alert-warning'));
-								$(".invalidBtn").attr('disabled',true);
-								return; break;
-							default:
-								$(".invalidBtn").attr('disabled',false);
-								$(".close").trigger("click");
-						}
-					});
-					$('.checkPassword').blur(function() {
-						var form = $(this).parents('form');
-						var pwd = form.find('input.password');
-						var error = form.find('.error_msg');
-						switch(pwd.validatepwd()) {
-							case 1: 
-								error.html(msgtemp('<strong>密码不能为空</strong> 请输入密码',    'alert-warning'));
-								$(".invalidBtn").attr('disabled',true);
-								return; break;
-							case 2: 
-								error.html(msgtemp('<strong>密码过短</strong> 请输入6位以上的密码','alert-warning')); 
-								$(".invalidBtn").attr('disabled',true);
-								return; break;
-							case 3: 
-								error.html(msgtemp('<strong>密码过于简单</strong><br>密码需为字母、数字或特殊字符组合',  'alert-warning'));
-								$(".invalidBtn").attr('disabled',true);
-								return; break;
-							default:
-								$(".invalidBtn").attr('disabled',false);
-								$(".close").trigger("click");
-						}
-					});
-// 					$('.submit').blur(function() {
-// 						var form = $(this).parents('form')
-// 						var phone = form.find('input.phone');
-// 						var pwd = form.find('input.password');
-// 						var error = form.find('.error_msg');
-// 						var success = form.siblings('.tabs_div');
-// 						var options = {
-// 							beforeSubmit: function () {
-// 								console.log('喵喵喵')
-// 							},
-// 							success: function (data) {
-// 								console.log(data)
-// 							}
-// 						}
-// 						console.log(phone)
-// 						// 验证手机号参考这个
-// 						switch(phone.validatemobile()) {
-// 							case 1: error.html(msgtemp('<strong>手机号码为空</strong> 请输入手机号码',    'alert-warning')); 
-// $(".btn").attr('disabled',true);return; break;
-// 							case 2: error.html(msgtemp('<strong>手机号码错误</strong> 请输入11位数的号码','alert-warning')); 
-// $(".btn").attr('disabled',true);return; break;
-// case 3: error.html(msgtemp('<strong>手机号码错误</strong> 请输入正确的号码',  'alert-warning')); $(".btn").attr('disabled',true);return; break;
-// default:
-// $(".btn").attr('disabled',false);
-							
-// 						}
-// 						// 验证密码复杂度参考这个
-// 						switch(pwd.validatepwd()) {
-// 							case 1: error.html(msgtemp('<strong>密码不能为空</strong> 请输入密码',    'alert-warning')); return; break;
-// 							case 2: error.html(msgtemp('<strong>密码过短</strong> 请输入6位以上的密码','alert-warning')); return; break;
-// 							case 3: error.html(msgtemp('<strong>密码过于简单</strong><br>密码需为字母、数字或特殊字符组合',  'alert-warning')); return; break;
-// 						}
-// 						form.ajaxForm(options);
-// 						// 请求成功执行类似这样的事件
-// 						// form.fadeOut(150,function() {
-// 						// 	success.fadeIn(150);
-// 						// });
+						// 验证手机号参考这个
 						
-// 					})
+						form.ajaxForm(options)
+						// 请求成功执行类似这样的事件
+						
+					})
 				});
 			</script>
 		</div>
