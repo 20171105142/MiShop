@@ -17,8 +17,23 @@
 	<title>U袋网 - 登录 / 注册</title>
 </head>
 <body>
+<%
+	String phone = "";
+	String password = "";
+	Cookie[] cookies = request.getCookies();
+	if(cookies != null) {
+		for(Cookie cookie:cookies) {
+			if("COKKIE_USERSPHONE".equals(cookie.getName())){
+				phone = cookie.getValue();
+			}
+			if("COKKIE_USERSPWD".equals(cookie.getName())){
+				password = cookie.getValue();
+			}
+		}
+	}
+%>
 	<div class="public-head-layout container">
-		<a class="logo" href="index.html"><img src="images/icons/logo.jpg" alt="U袋网" class="cover"></a>
+		<a class="logo" href="index.jsp"><img src="images/icons/logo.jpg" alt="U袋网" class="cover"></a>
 	</div>
 	<div style="background:url(images/login_bg.jpg) no-repeat center center; ">
 		<div class="login-layout container">
@@ -33,7 +48,7 @@
 								<div class="input-group-addon">
 									<span class="glyphicon glyphicon-phone" aria-hidden="true"></span>
 								</div>
-								<input class="form-control phone" name="phone" id="login_phone" required placeholder="手机号" maxlength="11" autocomplete="off" type="text">
+								<input class="form-control phone" name="phone" id="login_phone" required placeholder="手机号" maxlength="11" autocomplete="off" type="text" value="<%=phone%>">
 							</div>
 						</div>
 						<div class="form-group">
@@ -41,13 +56,13 @@
 								<div class="input-group-addon">
 									<span class="glyphicon glyphicon-lock" aria-hidden="true"></span>
 								</div>
-								<input class="form-control password" name="password" id="login_pwd" placeholder="请输入密码" autocomplete="off" type="password">
+								<input class="form-control password" name="password" id="login_pwd" placeholder="请输入密码" autocomplete="off" type="password" value="<%=password%>">
 								<div class="input-group-addon pwd-toggle" title="显示密码"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></div>
 							</div>
 						</div>
 						<div class="checkbox">
 	                        <label>
-	                        	<input checked="" id="login_checkbox" type="checkbox"><i></i> 30天内免登录
+	                        	<input checked="checked" id="login_checkbox" type="checkbox" value="true" name="remeberMe"><i></i> 30天内免登录
 	                        </label>
 	                        <a href="javascript:;" class="pull-right" id="resetpwd">忘记密码？</a>
 	                    </div>
@@ -77,8 +92,8 @@
 	                    		现在您可以
 	                    	</div>
 	                    	<div class="buts-box">
-	                    		<a role="button" href="index.html" class="btn btn-block btn-lg btn-default">继续访问商城</a>
-								<a role="button" href="udai_welcome.html" class="btn btn-block btn-lg btn-info">登录会员中心</a>
+	                    		<a role="button" href="index.jsp" class="btn btn-block btn-lg btn-default">继续访问商城</a>
+								<a role="button" href="udai_welcome.jsp" class="btn btn-block btn-lg btn-info">登录会员中心</a>
 	                    	</div>
 	                    </div>
                     </div>
@@ -138,8 +153,8 @@
 	                    		现在您可以
 	                    	</div>
 	                    	<div class="buts-box">
-	                    		<a role="button" href="index.html" class="btn btn-block btn-lg btn-default">继续访问商城</a>
-								<a role="button" href="udai_welcome.html" class="btn btn-block btn-lg btn-info">登录会员中心</a>
+	                    		<a role="button" href="index.jsp" class="btn btn-block btn-lg btn-default">继续访问商城</a>
+								<a role="button" href="udai_welcome.jsp" class="btn btn-block btn-lg btn-info">登录会员中心</a>
 	                    	</div>
 	                    </div>
                     </div>
@@ -194,8 +209,8 @@
 	                    		现在您可以
 	                    	</div>
 	                    	<div class="buts-box">
-	                    		<a role="button" href="index.html" class="btn btn-block btn-lg btn-default">继续访问商城</a>
-								<a role="button" href="login.html" class="btn btn-block btn-lg btn-info">返回登陆</a>
+	                    		<a role="button" href="index.jsp" class="btn btn-block btn-lg btn-default">继续访问商城</a>
+								<a role="button" href="login.jsp" class="btn btn-block btn-lg btn-info">返回登陆</a>
 	                    	</div>
 	                    </div>
                     </div>

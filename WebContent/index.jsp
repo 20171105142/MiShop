@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ page import = "cn.edu.imnu.mishop.bean.Users" %>
 <html lang="zh-cmn-Hans">
 <head>
 	<meta charset="UTF-8">
@@ -18,23 +19,7 @@
 	<title>U袋网</title>
 </head>
 <body>
-	<!-- 顶部tab -->
-	<div class="tab-header">
-		<div class="inner">
-			<div class="pull-left">
-				<div class="pull-left">嗨，欢迎来到<span class="cr">U袋网</span></div>
-				<a href="agent_level.html">网店代销</a>
-				<a href="temp_article/udai_article4.html">帮助中心</a>
-			</div>
-			<div class="pull-right">
-				<a href="login.jsp"><span class="cr">登录</span></a>
-				<a href="login.jsp?p=register">注册</a>
-				<a href="udai_welcome.html">我的U袋</a>
-				<a href="udai_order.html">我的订单</a>
-				<a href="udai_integral.html">积分平台</a>
-			</div>
-		</div>
-	</div>
+	<jsp:include page="top.jsp" flush="true"></jsp:include>
 	<!-- 搜索栏 -->
 	<div class="top-search">
 		<div class="inner">
@@ -312,18 +297,28 @@
 					<div class="avt-port">
 						<img src="images/icons/default_avt.png" alt="欢迎来到U袋网" class="cover b-r50">
 					</div>
-					<!-- 已登录 -->
-					<div class="name c6">Hi~ <span class="cr">18759808122</span></div>
-					<div class="point c6">积分: 30</div>
-
-					<!-- 未登录 -->
-					<!-- <div class="name c6">Hi~ 你好</div>
-					<div class="point c6"><a href="">点此登录</a>，发现更多精彩</div> -->
-					<div class="report-box">
-						<span class="badge">+30</span>
-						<a class="btn btn-info btn-block disabled" href="#" role="button">已签到1天</a>
-						<!-- <a class="btn btn-primary btn-block" href="#" role="button">签到领积分</a> -->
-					</div>
+					<%
+						Users sessionUsers = (Users)session.getAttribute("SESSION_USERS");
+						if(sessionUsers == null){
+					%>
+						<!-- 未登录 -->
+						<div class="name c6">Hi~ 你好</div>
+						<div class="point c6"><a href="">点此登录</a>，发现更多精彩</div>
+					<%
+						} else {
+					%>
+						<!-- 已登录 -->
+						<div class="name c6">Hi~ <span class="cr"><%=sessionUsers.getUsers_phone() %></span></div>
+						<div class="point c6">积分: 30</div>
+						<div class="report-box">
+							<span class="badge">+30</span>
+							<a class="btn btn-info btn-block disabled" href="login.jsp" role="button">已签到1天</a>
+							<!-- <a class="btn btn-primary btn-block" href="#" role="button">签到领积分</a> -->
+						</div>
+					<%
+						}
+					%>
+					
 				</div>
 				<div class="agent-box">
 					<a href="#" class="agent">
@@ -350,7 +345,7 @@
 						$(function() {
 							$('#verifyqq').click(function() {
 								DJMask.open({
-								　　width:"400px",
+									width:"400px",
 								　　height:"150px",
 								　　title:"U袋网提示您：",
 								　　content:"<b>该QQ不是客服-谨防受骗！</b>"
