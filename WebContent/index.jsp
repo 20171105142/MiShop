@@ -20,36 +20,6 @@
 </head>
 <body>
 	<jsp:include page="top.jsp" flush="true"></jsp:include>
-	<!-- 搜索栏 -->
-	<div class="top-search">
-		<div class="inner">
-			<a class="logo" href="index.html"><img src="images/icons/logo.jpg" alt="U袋网" class="cover"></a>
-			<div class="search-box">
-				<form class="input-group">
-					<input placeholder="Ta们都在搜U袋网" type="text">
-					<span class="input-group-btn">
-						<button type="button">
-							<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-						</button>
-					</span>
-				</form>
-				<p class="help-block text-nowrap">
-					<a href="">连衣裙</a>
-					<a href="">裤</a>
-					<a href="">衬衫</a>
-					<a href="">T恤</a>
-					<a href="">女包</a>
-					<a href="">家居服</a>
-					<a href="">2017新款</a>
-				</p>
-			</div>
-			<div class="cart-box">
-				<a href="udai_shopcart.html" class="cart-but">
-					<i class="iconfont icon-shopcart cr fz16"></i> 购物车 0 件
-				</a>
-			</div>
-		</div>
-	</div>
 	<!-- 首页导航栏 -->
 	<div class="top-nav bg3">
 		<div class="nav-box inner">
@@ -346,9 +316,9 @@
 							$('#verifyqq').click(function() {
 								DJMask.open({
 									width:"400px",
-								　　height:"150px",
-								　　title:"U袋网提示您：",
-								　　content:"<b>该QQ不是客服-谨防受骗！</b>"
+									height:"150px",
+									title:"U袋网提示您：",
+									content:"<b>该QQ不是客服-谨防受骗！</b>"
 							　　});
 							});
 						});
@@ -368,7 +338,7 @@
         <div class="swiper-wrapper">
             <div class="swiper-slide"><a href="item_show.html"><img src="images/temp/banner_1.jpg" class="cover"></a></div>
             <div class="swiper-slide"><a href="item_show.html"><img src="images/temp/banner_2.jpg" class="cover"></a></div>
-            <div class="swiper-slide"><a href="item_category.html"><img src="images/temp/banner_3.jpg" class="cover"></a></div>
+            <div class="swiper-slide"><a href="item_category.jsp"><img src="images/temp/banner_3.jpg" class="cover"></a></div>
             <div class="swiper-slide"><a href="item_show.html"><img src="images/temp/banner_4.jpg" class="cover"></a></div>
             <div class="swiper-slide"><a href="item_sale_page.html"><img src="images/temp/banner_5.jpg" class="cover"></a></div>
         </div>
