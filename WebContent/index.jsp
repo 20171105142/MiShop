@@ -20,6 +20,7 @@
 </head>
 <body>
 	<jsp:include page="top.jsp" flush="true"></jsp:include>
+	<jsp:include page="search.jsp" flush="true"></jsp:include>
 	<!-- 首页导航栏 -->
 	<div class="top-nav bg3">
 		<div class="nav-box inner">

@@ -38,7 +38,7 @@ public class GoodsDAO {
 		
 		return recordCount;
 	}
-
+	
 	public List<Goods> getGoodsPageList(int pageNo, int pageSize) {
 		// TODO Auto-generated method stub
 		int firstIndex = pageSize * (pageNo - 1);
@@ -72,6 +72,45 @@ public class GoodsDAO {
 		}
 		
 		return list;
+	}
+	public Goods getGoodsDetail(int goods_id){
+		String sql = "SELECT * FROM tb_goods WHERE goods_id = ?";
+		Goods goods = new Goods();
+		Connection conn = DBUtil.getConnection();
+		PreparedStatement pstmt = null;
+		ResultSet result = null;
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, goods_id);
+			result = pstmt.executeQuery();
+			
+			if(result.next()) {
+				goods.setGoods_id(result.getInt("goods_id"));
+				goods.setGoods_name(result.getString("goods_name"));
+				goods.setGoods_price(result.getString("goods_price"));
+				goods.setGoods_cover(result.getString("goods_cover"));
+				goods.setGoods_color(result.getString("goods_color"));
+				goods.setGoods_size(result.getString("goods_size"));
+				goods.setGoods_stock(result.getString("goods_stock"));
+				goods.setGoods_weight(result.getString("goods_weight"));
+				goods.setGoods_identifier(result.getString("goods_identifier"));
+				goods.setGoods_listing(result.getString("goods_listing"));
+				goods.setGoods_DisplayImages(result.getString("goods_displayImages"));
+				goods.setGoods_productImages(result.getString("goods_productImages"));
+				goods.setGoods_detailImages(result.getString("goods_detailImages"));
+				goods.setGoods_sizeAndTyrImages(result.getString("goods_sizeAndTyrImages"));
+				goods.setGoods_modelImages(result.getString("goods_modelImages"));
+				goods.setGoods_questionImages(result.getString("goods_questionImages"));
+				goods.setGoods_enlargeDisplayImages(result.getString("goods_enlargeDisplayImages"));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			DBUtil.closeJDBC(result, pstmt, conn);
+		}
+		return goods;
 	}
 
 }

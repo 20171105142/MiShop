@@ -27,6 +27,7 @@
 </head>
 <body>
 	<jsp:include page="top.jsp" flush="true"></jsp:include>
+	<jsp:include page="search.jsp" flush="true"></jsp:include>
 	<!-- 内页导航栏 -->
 	<div class="top-nav bg3">
 		<div class="nav-box inner">
@@ -141,15 +142,15 @@
 					<%
 						List<Goods> list = pagination.getPageDate();
 						if (list != null) {
-							for (Goods b : list) {
+							for (Goods goods : list) {
 					%>
 					<div class="item-card">
-						<a href="item_show.html" class="photo">
-							<img src=<%=b.getGoods_cover()%> alt=<%=b.getGoods_name()%> class="cover">
-							<div class="name"><%=b.getGoods_name()%></div>
+						<a href="<%=request.getContextPath()%>/GoodsDetailServlet?goods_id=<%=goods.getGoods_id()%>" class="photo">
+							<img src=<%=goods.getGoods_cover()%> alt=<%=goods.getGoods_name()%> class="cover">
+							<div class="name"><%=goods.getGoods_name()%></div>
 						</a>
 						<div class="middle">
-							<div class="price"><small>￥</small><%=b.getGoods_price()%></div>
+							<div class="price"><small>￥</small><%=goods.getGoods_price()%></div>
 							<div class="sale"><a href="">加入购物车</a></div>
 						</div>
 						<div class="buttom">
