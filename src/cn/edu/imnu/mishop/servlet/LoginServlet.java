@@ -54,7 +54,7 @@ public class LoginServlet extends HttpServlet {
 		if(UserID!=0) {
 			Users users = new Users(phone,password);
 			session.setAttribute("SESSION_USERS", users);
-			session.setMaxInactiveInterval(10);
+			session.setMaxInactiveInterval(60);
 			remeberMe(remeberMe, phone, password, request, response);
 			object1.put("status", "1");
 		} else {

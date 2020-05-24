@@ -236,7 +236,7 @@
 														width:"300px",
 														height:"100px",
 														content:"您输入的数量有误"
-												　　});
+													});
 												}
 												$('.amount-input').val(num - 1);
 											}

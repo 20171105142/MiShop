@@ -7,19 +7,22 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
- * Servlet Filter implementation class EncodingFilter
+ * Servlet Filter implementation class SessionCheckFilter
  */
-//@WebFilter("/EncodingFilter")
-public class EncodingFilter implements Filter {
-	String encoding = null;
+//@WebFilter("/SessionCheckFilter")
+public class SessionCheckFilter implements Filter {
+
     /**
      * Default constructor. 
      */
-    public EncodingFilter() {
+	private FilterConfig config;
+	
+    public SessionCheckFilter() {
         // TODO Auto-generated constructor stub
     }
 
@@ -28,7 +31,7 @@ public class EncodingFilter implements Filter {
 	 */
 	public void destroy() {
 		// TODO Auto-generated method stub
-		this.encoding = null;
+		this.config = null;
 	}
 
 	/**
@@ -39,13 +42,15 @@ public class EncodingFilter implements Filter {
 		// place your code here
 
 		// pass the request along the filter chain
-//		HttpServletRequest req = (HttpServletRequest) request;
-//        HttpServletResponse res = (HttpServletResponse) response;
-        
-		request.setCharacterEncoding(encoding);
-		response.setContentType("text/html;charset=" + encoding);
+		String loginPage = config.getInitParameter("loginPage");
 		
-		chain.doFilter(request, response);
+		HttpSession session = ((HttpServletRequest) request).getSession();
+		
+		if(session.getAttribute("SESSION_USERS") != null){		
+			chain.doFilter(request, response);
+		} else {
+			request.getRequestDispatcher(loginPage).forward(request, response);
+		}
 	}
 
 	/**
@@ -53,7 +58,7 @@ public class EncodingFilter implements Filter {
 	 */
 	public void init(FilterConfig fConfig) throws ServletException {
 		// TODO Auto-generated method stub
-		this.encoding = fConfig.getInitParameter("encoding");
+		this.config = fConfig;
 	}
 
 }
