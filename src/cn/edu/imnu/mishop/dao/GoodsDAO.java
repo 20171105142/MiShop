@@ -89,6 +89,7 @@ public class GoodsDAO {
 				goods.setGoods_id(result.getInt("goods_id"));
 				goods.setGoods_name(result.getString("goods_name"));
 				goods.setGoods_price(result.getString("goods_price"));
+				goods.setGoods_sale(result.getString("goods_sale"));
 				goods.setGoods_cover(result.getString("goods_cover"));
 				goods.setGoods_color(result.getString("goods_color"));
 				goods.setGoods_size(result.getString("goods_size"));
@@ -112,5 +113,36 @@ public class GoodsDAO {
 		}
 		return goods;
 	}
-
+	public List<Goods> getHotGoods(String search){
+		List<Goods> list = new ArrayList<Goods>();
+		String sql = "SELECT * FROM	tb_goods WHERE "
+					+ "goods_typeid in (SELECT goodsType_id FROM tb_goodstype "
+					+ "WHERE goodsType_name LIKE ?) ORDER BY goods_sale DESC LIMIT 0, 8;";
+		Connection conn = DBUtil.getConnection();
+		PreparedStatement pstmt = null;
+		ResultSet result = null;
+		
+		try {			
+			pstmt = conn.prepareStatement(sql);
+		
+			pstmt.setString(1, "%" + search + "%");
+			
+			result = pstmt.executeQuery();
+			
+			while(result.next()) {
+				Goods goods = new Goods();
+				goods.setGoods_id(result.getInt("goods_id"));
+				goods.setGoods_name(result.getString("goods_name"));
+				goods.setGoods_price(result.getString("goods_price"));
+				goods.setGoods_cover(result.getString("goods_cover"));
+				list.add(goods);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			DBUtil.closeJDBC(result, pstmt, conn);
+		}
+		return list;
+	}
 }

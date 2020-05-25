@@ -1,7 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="cn.edu.imnu.mishop.bean.Goods"%>
+<%@ page import="java.util.List"%>
+<%@ page import="java.util.Set"%>
 <html lang="zh-cmn-Hans">
+<jsp:useBean id="recommend"
+	class="cn.edu.imnu.mishop.dao.GoodsDAO" scope="request">
+</jsp:useBean>
 <head>
 	<meta charset="UTF-8">
 	<link rel="shortcut icon" href="favicon.ico">
@@ -51,7 +56,7 @@
 				</ol>
 				<div class="item-pic__box" id="magnifier">
 					<div class="small-box">
-						<img class="cover" src="images/temp/S-001-1_s.jpg" alt="重回汉唐 旧忆 原创设计日常汉服女款绣花长褙子吊带改良宋裤春夏">
+						<img class="cover" src="<%=goods.getGoods_DisplayImages()[0] %>" alt="重回汉唐 旧忆 原创设计日常汉服女款绣花长褙子吊带改良宋裤春夏">
 						<span class="hover"></span>
 					</div>
 					<div class="thumbnail-box">
@@ -71,7 +76,7 @@
 						</div>
 						<a href="javascript:;" class="btn btn-default btn-next"></a>
 					</div>
-					<div class="big-box"><img src="images/temp/S-001-1_b.jpg" alt="重回汉唐 旧忆 原创设计日常汉服女款绣花长褙子吊带改良宋裤春夏"></div>
+					<div class="big-box"><img src="<%=goods.getGoods_enlargeDisplayImages()[0] %>" alt="重回汉唐 旧忆 原创设计日常汉服女款绣花长褙子吊带改良宋裤春夏"></div>
 				</div>
 				<script src="js/jquery.magnifier.js"></script>
 				<script>
@@ -120,7 +125,7 @@
 					<ul class="item-ind-panel clearfix">
 						<li class="item-ind-item">
 							<span class="ind-label c9">累计销量</span>
-							<span class="ind-count cr">1688</span>
+							<span class="ind-count cr"><%=goods.getGoods_sale() %></span>
 						</li>
 						<li class="item-ind-item">
 							<a href=""><span class="ind-label c9">累计评论</span>
@@ -218,12 +223,12 @@
 									$(function () {
 										$('.amount-input').onlyReg({reg: /[^0-9]/g});
 										var stock = parseInt($('#Stock').html());
-										$('.amount-widget').on('click','.amount-but',function() {
+										$('.amount-widget').on('click','.amount-but',function() {											
 											var num = parseInt($('.amount-input').val());
 											if (!num) num = 0;
-											if ($(this).hasClass('add')) {
-												if (num > stock - 1){
-													return DJMask.open({
+											if ($(this).hasClass('add')) {												
+												if (num > stock - 1){													
+													return DJMask.msg({														
 														width:"300px",
 														height:"100px",
 														content:"您输入的数量超过库存上限"
@@ -261,74 +266,52 @@
 				<div class="swiper-container picked-swiper">
 					<div class="swiper-wrapper">
 						<div class="swiper-slide">
-							<a class="picked-item" href="">
-								<img src="images/temp/S-001-1_s.jpg" alt="" class="cover">
-								<div class="look_price">¥134.99</div>
-							</a>
-							<a class="picked-item" href="">
-								<img src="images/temp/S-001-2_s.jpg" alt="" class="cover">
-								<div class="look_price">¥134.99</div>
-							</a>
-							<a class="picked-item" href="">
-								<img src="images/temp/S-001-3_s.jpg" alt="" class="cover">
-								<div class="look_price">¥134.99</div>
-							</a>
+							<%
+								List<Goods> list = recommend.getHotGoods("");
+								list = list.subList(0, 3);
+								if (list != null) {
+									for (Goods hotgoods : list) {
+							%>										
+										<a class="picked-item" href="<%=request.getContextPath() %>/GoodsDetailServlet?goods_id=<%=hotgoods.getGoods_id() %>">
+											<img src="<%=hotgoods.getGoods_cover() %>" alt="<%=hotgoods.getGoods_name()%>" class="cover">
+											<div class="look_price">¥<%=hotgoods.getGoods_price()%></div>
+										</a>																		
+							<%
+									}
+								}
+							%>
 						</div>
 						<div class="swiper-slide">
-							<a class="picked-item" href="">
-								<img src="images/temp/S-001-4_s.jpg" alt="" class="cover">
-								<div class="look_price">¥134.99</div>
-							</a>
-							<a class="picked-item" href="">
-								<img src="images/temp/S-001-5_s.jpg" alt="" class="cover">
-								<div class="look_price">¥134.99</div>
-							</a>
-							<a class="picked-item" href="">
-								<img src="images/temp/S-001-6_s.jpg" alt="" class="cover">
-								<div class="look_price">¥134.99</div>
-							</a>
+							<%
+								list = recommend.getHotGoods("");
+								list = list.subList(3, 6);
+								if (list != null) {
+									for (Goods hotgoods : list) {
+							%>										
+										<a class="picked-item" href="<%=request.getContextPath() %>/GoodsDetailServlet?goods_id=<%=hotgoods.getGoods_id() %>">
+											<img src="<%=hotgoods.getGoods_cover() %>" alt="<%=hotgoods.getGoods_name()%>" class="cover">
+											<div class="look_price">¥<%=hotgoods.getGoods_price()%></div>
+										</a>																
+							<%
+									}
+								}
+							%>
 						</div>
 						<div class="swiper-slide">
-							<a class="picked-item" href="">
-								<img src="images/temp/S-001-7_s.jpg" alt="" class="cover">
-								<div class="look_price">¥134.99</div>
-							</a>
-							<a class="picked-item" href="">
-								<img src="images/temp/S-001-8_s.jpg" alt="" class="cover">
-								<div class="look_price">¥134.99</div>
-							</a>
-							<a class="picked-item" href="">
-								<img src="images/temp/S-001-9_s.jpg" alt="" class="cover">
-								<div class="look_price">¥134.99</div>
-							</a>
-						</div>
-						<div class="swiper-slide">
-							<a class="picked-item" href="">
-								<img src="images/temp/S-001-10_s.jpg" alt="" class="cover">
-								<div class="look_price">¥134.99</div>
-							</a>
-							<a class="picked-item" href="">
-								<img src="images/temp/S-001-1_s.jpg" alt="" class="cover">
-								<div class="look_price">¥134.99</div>
-							</a>
-							<a class="picked-item" href="">
-								<img src="images/temp/S-001-2_s.jpg" alt="" class="cover">
-								<div class="look_price">¥134.99</div>
-							</a>
-						</div>
-						<div class="swiper-slide">
-							<a class="picked-item" href="">
-								<img src="images/temp/S-001-3_s.jpg" alt="" class="cover">
-								<div class="look_price">¥134.99</div>
-							</a>
-							<a class="picked-item" href="">
-								<img src="images/temp/S-001-4_s.jpg" alt="" class="cover">
-								<div class="look_price">¥134.99</div>
-							</a>
-							<a class="picked-item" href="">
-								<img src="images/temp/S-001-5_s.jpg" alt="" class="cover">
-								<div class="look_price">¥134.99</div>
-							</a>
+							<%
+								list = recommend.getHotGoods("");
+								list = list.subList(6, 8);
+								if (list != null) {
+									for (Goods hotgoods : list) {
+							%>										
+										<a class="picked-item" href="<%=request.getContextPath() %>/GoodsDetailServlet?goods_id=<%=hotgoods.getGoods_id() %>">
+											<img src="<%=hotgoods.getGoods_cover() %>" alt="<%=hotgoods.getGoods_name()%>" class="cover">
+											<div class="look_price">¥<%=hotgoods.getGoods_price()%></div>
+										</a>																
+							<%
+									}
+								}
+							%>
 						</div>
 					</div>
 				</div>

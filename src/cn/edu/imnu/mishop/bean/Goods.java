@@ -5,7 +5,7 @@ public class Goods {
 	String goods_name;
 	String goods_price;
 	String goods_cover;
-	
+	String goods_sale;
 	String [] goods_color;
 	String [] goods_size;
 	String goods_stock;
@@ -36,6 +36,12 @@ public class Goods {
 	}
 	public void setGoods_cover(String goods_cover) {
 		this.goods_cover = goods_cover;
+	}
+	public String getGoods_sale() {
+		return goods_sale;
+	}
+	public void setGoods_sale(String goods_sale) {
+		this.goods_sale = goods_sale;
 	}
 	public int getGoods_id() {
 		return goods_id;

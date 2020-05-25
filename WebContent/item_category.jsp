@@ -7,7 +7,10 @@
 <jsp:useBean id="pagination"
 	class="cn.edu.imnu.mishop.PageBean.GoodsPageBean" scope="request">
 </jsp:useBean>
-<jsp:setProperty property="pageSize" value="20" name="pagination" />
+<jsp:useBean id="recommend"
+	class="cn.edu.imnu.mishop.dao.GoodsDAO" scope="request">
+</jsp:useBean>
+<jsp:setProperty property="pageSize" value="16" name="pagination" />
 <jsp:setProperty property="pageNo" param="pageNo" name="pagination" />
 <head>
 	<meta charset="UTF-8">
@@ -154,7 +157,7 @@
 							<div class="sale"><a href="">加入购物车</a></div>
 						</div>
 						<div class="buttom">
-							<div>销量 <b>666</b></div>
+							<div>销量 <b><%=goods.getGoods_sale() %></b></div>
 							<div>人气 <b>888</b></div>
 							<div>评论 <b>1688</b></div>
 						</div>
@@ -172,25 +175,25 @@
 				%>
 					<a class="disabled" href="item_category.jsp?pageNo=<%=pagination.getPageNo() - 1%>">上一页</a>
 				<%
-					}
+					}								
+					int viewedIndex = 7;					
+					int firstIndex = (pagination.getPageNo()<=viewedIndex/2+1?1:(pagination.getPageNo()-viewedIndex/2));
+    				int lastIndex = (firstIndex+viewedIndex-1>=pagination.getTotalPages()?pagination.getTotalPages():firstIndex+viewedIndex-1);
+    				if(lastIndex>=pagination.getTotalPages())
+    					firstIndex = lastIndex - viewedIndex+1;
+    				if(firstIndex < 1){
+    					firstIndex = 1;
+    				}
+					for(int i = firstIndex; i <= lastIndex; i++){
+						if(i == pagination.getPageNo()){
 				%>
-				<%
-					for(int i = 0; i < pagination.getTotalPages(); i++){
-						
-				%>
-				<%
-						if(pagination.getPageNo() == i + 1){
-				%>
-							<a class="select"><%=i + 1%></a>
+							<a class="select"><%=i %></a>
 				<%
 						} else {
-				%>
-							<a href="item_category.jsp?pageNo=<%=i + 1%>"><%=i + 1 %></a>
-				<%	
+				%>			<a href="item_category.jsp?pageNo=<%=i %>"><%=i %></a>
+				<%
 						}
 					}
-				%>
-				<%
 					if (pagination.isHasNextPage()) {
 				%>
 						<a class="" href="item_category.jsp?pageNo=<%=pagination.getPageNo() + 1%>">下一页</a>
@@ -213,7 +216,7 @@
 					if(page != 0 && page <= <%=pagination.getTotalPages()%>){
 						window.location.href = "item_category.jsp?pageNo=" + page;
 					}
-				});
+				});				
 			</script>
 			<div class="pull-right">
 				<div class="desc-segments__content">
@@ -221,16 +224,19 @@
 						<span class="c6">爆款推荐</span>
 					</div>
 					<div class="picked-box">
-						<a href="" class="picked-item"><img src="images/temp/S-001.jpg" alt="" class="cover"><span class="look_price">¥134.99</span></a>
-						<a href="" class="picked-item"><img src="images/temp/S-002.jpg" alt="" class="cover"><span class="look_price">¥134.99</span></a>
-						<a href="" class="picked-item"><img src="images/temp/S-003.jpg" alt="" class="cover"><span class="look_price">¥134.99</span></a>
-						<a href="" class="picked-item"><img src="images/temp/S-004.jpg" alt="" class="cover"><span class="look_price">¥134.99</span></a>
-						<a href="" class="picked-item"><img src="images/temp/S-005.jpg" alt="" class="cover"><span class="look_price">¥134.99</span></a>
-						<a href="" class="picked-item"><img src="images/temp/S-006.jpg" alt="" class="cover"><span class="look_price">¥134.99</span></a>
-						<a href="" class="picked-item"><img src="images/temp/S-007.jpg" alt="" class="cover"><span class="look_price">¥134.99</span></a>
-						<a href="" class="picked-item"><img src="images/temp/S-008.jpg" alt="" class="cover"><span class="look_price">¥134.99</span></a>
-						<a href="" class="picked-item"><img src="images/temp/S-009.jpg" alt="" class="cover"><span class="look_price">¥134.99</span></a>
-						<a href="" class="picked-item"><img src="images/temp/S-010.jpg" alt="" class="cover"><span class="look_price">¥134.99</span></a>
+						<%
+							list = recommend.getHotGoods("");
+							if (list != null) {
+								for (Goods goods : list) {
+						%>
+									<a href="<%=request.getContextPath() %>/GoodsDetailServlet?goods_id=<%=goods.getGoods_id() %>" class="picked-item">
+										<img src="<%=goods.getGoods_cover() %>" alt="<%=goods.getGoods_name()%>" class="cover">
+											<span class="look_price">¥<%=goods.getGoods_price()%></span>
+									</a>
+						<%
+								}
+							}
+						%>					
 					</div>
 				</div>
 			</div>
