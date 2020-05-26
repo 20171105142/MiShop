@@ -11,20 +11,19 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.alibaba.fastjson.JSONObject;
 
-import cn.edu.imnu.mishop.dao.UsersDAO;
-
+import cn.edu.imnu.mishop.dao.CartDAO;
 
 /**
- * Servlet implementation class RegisterServlet
+ * Servlet implementation class AddCartServlet
  */
-@WebServlet("/RegisterServlet")
-public class RegisterServlet extends HttpServlet {
+@WebServlet("/AddCartServlet")
+public class AddCartServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public RegisterServlet() {
+    public AddCartServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -35,20 +34,26 @@ public class RegisterServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 //		response.getWriter().append("Served at: ").append(request.getContextPath());
-		String phone = request.getParameter("phone");
-		String password = request.getParameter("password");
-		
-		PrintWriter out = response.getWriter();
 		JSONObject object1 = new JSONObject();
+		CartDAO cart = new CartDAO();
+		PrintWriter out = response.getWriter();
 		
-		UsersDAO dao = new UsersDAO();
-		boolean flag = dao.isExistPhone(phone);
-		object1.put("type", "register");
-		if (flag) {
-			object1.put("status", "0");
+		int users_id = Integer.parseInt(request.getParameter("userid"));
+		int goods_id = Integer.parseInt(request.getParameter("goodsid"));
+		String goods_color = request.getParameter("color");
+		String goods_size = request.getParameter("size");
+		int goods_amout = Integer.parseInt(request.getParameter("amount"));
+		int status = 0;
+		int amout = cart.isGoods(users_id, goods_id, goods_color, goods_size);
+		if(amout == 0) {
+			status = cart.addCart(users_id, goods_id, goods_color, goods_size, goods_amout);
 		} else {
-			dao.save(phone,password);
-			object1.put("status", "1");
+			status = cart.updateCart(users_id, goods_id, goods_color, goods_size, goods_amout, amout);
+		}
+		if( status != 0) {
+			object1.put("status", status);
+		} else {
+			object1.put("status", "0");
 		}
 		out.write(object1.toJSONString());
 	}

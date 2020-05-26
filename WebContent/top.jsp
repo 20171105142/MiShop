@@ -28,10 +28,16 @@
 				%>
 					<span>Hi~</span>
 					<span class="cr" ><%=sessionUsers.getUsers_phone() %></span>
-					<a href="LogoutServlet">退出</a>
+					<a href="" + url id="logout">退出</a>
 				<%
 					}
 				%>
+				<script>
+					$('#logout').click(function(){
+						var url = window.location.href;
+						document.getElementById("logout").href="LogoutServlet?url=" + url;
+					});
+				</script>
 				<a href="udai_welcome.jsp">我的U袋</a>
 				<a href="udai_order.jsp">我的订单</a>
 				<a href="udai_integral.html">积分平台</a>

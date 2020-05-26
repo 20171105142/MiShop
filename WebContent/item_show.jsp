@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="cn.edu.imnu.mishop.bean.Goods"%>
+<%@ page import="cn.edu.imnu.mishop.bean.Users"%>
 <%@ page import="java.util.List"%>
 <%@ page import="java.util.Set"%>
 <html lang="zh-cmn-Hans">
@@ -136,126 +137,168 @@
 							<span class="ind-count cg">666</span></a>
 						</li>
 					</ul>
-					<div class="item-key">
-						<div class="item-sku">
-							<dl class="item-prop clearfix">
-								<dt class="item-metatit">颜色：</dt>
-								<dd><ul data-property="颜色" class="clearfix">
-									<%
-										int colorCheckId = 1;
-										for(String color:goods.getGoods_color()){
-											if(colorCheckId == 1){
-									%>
-												<li>
-													<a href="javascript:;" role="button" class="check on" data-value="<%=color %>" aria-disabled="true">
-													<span><%=color %></span>
-													</a>
-												</li>
-									<%
-											} else {
-									%>
-												<li>
-													<a href="javascript:;" role="button" class="check" data-value="<%=color %>" aria-disabled="true">
+					<div class="item-key">						
+						<form action="">
+							<div class="item-sku">
+								<dl class="item-prop clearfix">
+									<dt class="item-metatit">颜色：</dt>
+									<dd><ul data-property="颜色" class="clearfix">
+										<%
+											int colorCheckId = 1;
+											for(String color:goods.getGoods_color()){
+												if(colorCheckId == 1){
+										%>
+													<li>
+														<a href="javascript:;" role="button" class="check on" data-value="<%=color %>" aria-disabled="true" name="color">
 														<span><%=color %></span>
-													</a>
-												</li>
-									<%
-											}
-											colorCheckId ++;
-										}
-									%>
-									<script>
-										$(document).ready(function(){
-											$('.check').click(function(){
-												if($(this).hasClass("on")){
-													console.log("have class")
-													
+														</a>
+													</li>
+										<%
 												} else {
-													$(this).addClass("on").parent().siblings().children().removeClass("on");												
+										%>
+													<li>
+														<a href="javascript:;" role="button" class="check" data-value="<%=color %>" aria-disabled="true" name="color">
+															<span><%=color %></span>
+														</a>
+													</li>
+										<%
 												}
-											})																				
-										});
-										
-									</script>
-								</ul></dd>
-							</dl>
-							<dl class="item-prop clearfix">
-								<dt class="item-metatit">尺码：</dt>
-								<dd><ul data-property="尺码" class="clearfix">
-									<%
-										int sizeCheckId = 1;
-										for(String size:goods.getGoods_size()){
-											if(sizeCheckId == 1){
-									%>
-												<li>
-													<a href="javascript:;" role="button" class="check on" data-value="<%=size %>" aria-disabled="true">
-													<span><%=size %></span>
-													</a>
-												</li>
-									<%
-											} else {
-									%>
-												<li>
-													<a href="javascript:;" role="button"  class="check" data-value="<%=size %>" aria-disabled="true">
+												colorCheckId ++;
+											}
+										%>
+										<script>
+											$(document).ready(function(){
+												$('.check').click(function(){
+													if($(this).hasClass("on")){
+														console.log("have class")
+														
+													} else {
+														
+														$(this).addClass("on").parent().siblings().children().removeClass("on");												
+													}
+												})																				
+											});
+											
+										</script>
+									</ul></dd>
+								</dl>
+								<dl class="item-prop clearfix">
+									<dt class="item-metatit">尺码：</dt>
+									<dd><ul data-property="尺码" class="clearfix">
+										<%
+											int sizeCheckId = 1;
+											for(String size:goods.getGoods_size()){
+												if(sizeCheckId == 1){
+										%>
+													<li>
+														<a href="javascript:;" role="button" class="check on" data-value="<%=size %>" aria-disabled="true" name="size">
 														<span><%=size %></span>
-													</a>
-												</li>
-									<%
-											}
-											sizeCheckId ++;
-										}
-									%>
-								</ul></dd>
-							</dl>
-						</div>
-						<div class="item-amount clearfix bgf5">
-							<div class="item-metatit">数量：</div>
-							<div class="amount-box">
-								<div class="amount-widget">
-									<input class="amount-input" value="1" maxlength="8" title="请输入购买量" type="text">
-									<div class="amount-btn">
-										<a class="amount-but add"></a>
-										<a class="amount-but sub"></a>
-									</div>
-								</div>
-								<div class="item-stock"><span style="margin-left: 10px;">库存 <b id="Stock"><%=goods.getGoods_stock() %></b> 件</span></div>
-								<script>
-									$(function () {
-										$('.amount-input').onlyReg({reg: /[^0-9]/g});
-										var stock = parseInt($('#Stock').html());
-										$('.amount-widget').on('click','.amount-but',function() {											
-											var num = parseInt($('.amount-input').val());
-											if (!num) num = 0;
-											if ($(this).hasClass('add')) {												
-												if (num > stock - 1){													
-													return DJMask.msg({														
-														width:"300px",
-														height:"100px",
-														content:"您输入的数量超过库存上限"
-													});
+														</a>
+													</li>
+										<%
+												} else {
+										%>
+													<li>
+														<a href="javascript:;" role="button"  class="check" data-value="<%=size %>" aria-disabled="true" name="size">
+															<span><%=size %></span>
+														</a>
+													</li>
+										<%
 												}
-												$('.amount-input').val(num + 1);
-											} else if ($(this).hasClass('sub')) {
-												if (num == 1){
-													return DJMask.open({
-														width:"300px",
-														height:"100px",
-														content:"您输入的数量有误"
-													});
-												}
-												$('.amount-input').val(num - 1);
+												sizeCheckId ++;
 											}
-										});
-									});
-								</script>
+										%>
+									</ul></dd>
+								</dl>
 							</div>
-						</div>
-						<div class="item-action clearfix bgf5">
-							<a href="javascript:;" rel="nofollow" data-addfastbuy="true" title="点击此按钮，到下一步确认购买信息。" role="button" class="item-action__buy">立即购买</a>
-							<a href="javascript:;" rel="nofollow" data-addfastbuy="true" role="button" class="item-action__basket">
-								<i class="iconfont icon-shopcart"></i> 加入购物车
-							</a>
-						</div>
+							<div class="item-amount clearfix bgf5">
+								<div class="item-metatit">数量：</div>
+								<div class="amount-box">
+									<div class="amount-widget">
+										<input class="amount-input" value="1" maxlength="8" title="请输入购买量" type="text" id="goodsNumber">
+										<div class="amount-btn">
+											<a class="amount-but add"></a>
+											<a class="amount-but sub"></a>
+										</div>
+									</div>
+									<div class="item-stock"><span style="margin-left: 10px;">库存 <b id="Stock"><%=goods.getGoods_stock() %></b> 件</span></div>
+									<script>
+										$(function () {
+											$('.amount-input').onlyReg({reg: /[^0-9]/g});
+											var stock = parseInt($('#Stock').html());
+											$('.amount-widget').on('click','.amount-but',function() {											
+												var num = parseInt($('.amount-input').val());
+												if (!num) num = 0;
+												if ($(this).hasClass('add')) {												
+													if (num > stock - 1){													
+														return DJMask.msg({														
+															width:"300px",
+															height:"100px",
+															content:"您输入的数量超过库存上限"
+														});
+													}
+													$('.amount-input').val(num + 1);
+												} else if ($(this).hasClass('sub')) {
+													if (num == 1){
+														return DJMask.open({
+															width:"300px",
+															height:"100px",
+															content:"您输入的数量有误"
+														});
+													}
+													$('.amount-input').val(num - 1);
+												}
+											});
+										});
+									</script>
+								</div>
+							</div>
+							<div class="item-action clearfix bgf5">
+								<a href="javascript:;" rel="nofollow" data-addfastbuy="true" title="点击此按钮，到下一步确认购买信息。" role="button" class="item-action__buy">立即购买</a>
+								<a href="javascript:;" rel="nofollow" data-addfastbuy="true" role="button" class="item-action__basket">
+									<i class="iconfont icon-shopcart"></i> 加入购物车
+								</a>
+							</div>
+						</form>
+						<script>
+							$(document).ready(function() {
+								$(".item-action__basket").click(function(){
+									<%	
+										Users users = (Users)session.getAttribute("SESSION_USERS");
+										if(users != null){
+									%>
+											var form = $(this).parents('form')
+											var color = $(".on:first").attr("data-value")
+											var size = $(".on:last").attr("data-value")
+											var amount = $('.amount-input').val()
+											$.ajax({
+									            url: "<%=request.getContextPath() %>/AddCartServlet",			
+									            type: "post",
+									            data:{
+									            	userid: <%=users.getUsers_id() %>,
+									            	goodsid: <%=goods.getGoods_id() %>,
+									            	color: color,
+									            	size: size,
+									            	amount: amount
+									            },				
+									            error:function(data){
+									            	console.log("add cart data",data)
+									            },
+									            success:function(data){
+									                console.log("add cart data",data)
+									              
+									            }
+									        });
+									<%
+										} else {											
+									%>			
+											$(location).attr('href', 'login.jsp');
+									<%
+										}
+									%>																					
+								});								
+							});
+						</script>
 					</div>
 				</div>
 			</div>
@@ -1249,110 +1292,36 @@
 					<div class="swiper-container recommends-swiper">
 						<div class="swiper-wrapper">
 							<div class="swiper-slide">
-								<a class="picked-item" href="">
-									<img src="images/temp/S-001-1_s.jpg" alt="" class="cover">
-									<div class="look_price">¥134.99</div>
-								</a>
-								<a class="picked-item" href="">
-									<img src="images/temp/S-001-2_s.jpg" alt="" class="cover">
-									<div class="look_price">¥134.99</div>
-								</a>
-								<a class="picked-item" href="">
-									<img src="images/temp/S-001-3_s.jpg" alt="" class="cover">
-									<div class="look_price">¥134.99</div>
-								</a>
-								<a class="picked-item" href="">
-									<img src="images/temp/S-001-4_s.jpg" alt="" class="cover">
-									<div class="look_price">¥134.99</div>
-								</a>
-								<a class="picked-item" href="">
-									<img src="images/temp/S-001-5_s.jpg" alt="" class="cover">
-									<div class="look_price">¥134.99</div>
-								</a>
+								<%
+									list = recommend.getHotGoods("");
+									list = list.subList(0, 4);
+									if (list != null) {
+										for (Goods hotgoods : list) {
+								%>										
+											<a class="picked-item" href="<%=request.getContextPath() %>/GoodsDetailServlet?goods_id=<%=hotgoods.getGoods_id() %>">
+												<img src="<%=hotgoods.getGoods_cover() %>" alt="<%=hotgoods.getGoods_name()%>" class="cover">
+												<div class="look_price">¥<%=hotgoods.getGoods_price()%></div>
+											</a>																
+								<%
+										}
+									}
+								%>
 							</div>
 							<div class="swiper-slide">
-								<a class="picked-item" href="">
-									<img src="images/temp/S-001-1_s.jpg" alt="" class="cover">
-									<div class="look_price">¥134.99</div>
-								</a>
-								<a class="picked-item" href="">
-									<img src="images/temp/S-001-2_s.jpg" alt="" class="cover">
-									<div class="look_price">¥134.99</div>
-								</a>
-								<a class="picked-item" href="">
-									<img src="images/temp/S-001-3_s.jpg" alt="" class="cover">
-									<div class="look_price">¥134.99</div>
-								</a>
-								<a class="picked-item" href="">
-									<img src="images/temp/S-001-4_s.jpg" alt="" class="cover">
-									<div class="look_price">¥134.99</div>
-								</a>
-								<a class="picked-item" href="">
-									<img src="images/temp/S-001-5_s.jpg" alt="" class="cover">
-									<div class="look_price">¥134.99</div>
-								</a>
-							</div>
-							<div class="swiper-slide">
-								<a class="picked-item" href="">
-									<img src="images/temp/S-001-1_s.jpg" alt="" class="cover">
-									<div class="look_price">¥134.99</div>
-								</a>
-								<a class="picked-item" href="">
-									<img src="images/temp/S-001-2_s.jpg" alt="" class="cover">
-									<div class="look_price">¥134.99</div>
-								</a>
-								<a class="picked-item" href="">
-									<img src="images/temp/S-001-3_s.jpg" alt="" class="cover">
-									<div class="look_price">¥134.99</div>
-								</a>
-								<a class="picked-item" href="">
-									<img src="images/temp/S-001-4_s.jpg" alt="" class="cover">
-									<div class="look_price">¥134.99</div>
-								</a>
-								<a class="picked-item" href="">
-									<img src="images/temp/S-001-5_s.jpg" alt="" class="cover">
-									<div class="look_price">¥134.99</div>
-								</a>
-							</div>
-							<div class="swiper-slide">
-								<a class="picked-item" href="">
-									<img src="images/temp/S-001-1_s.jpg" alt="" class="cover">
-									<div class="look_price">¥134.99</div>
-								</a>
-								<a class="picked-item" href="">
-									<img src="images/temp/S-001-2_s.jpg" alt="" class="cover">
-									<div class="look_price">¥134.99</div>
-								</a>
-								<a class="picked-item" href="">
-									<img src="images/temp/S-001-3_s.jpg" alt="" class="cover">
-									<div class="look_price">¥134.99</div>
-								</a>
-								<a class="picked-item" href="">
-									<img src="images/temp/S-001-4_s.jpg" alt="" class="cover">
-									<div class="look_price">¥134.99</div>
-								</a>
-								<a class="picked-item" href="">
-									<img src="images/temp/S-001-5_s.jpg" alt="" class="cover">
-									<div class="look_price">¥134.99</div>
-								</a>
-							</div>
-							<div class="swiper-slide">
-								<a class="picked-item" href="">
-									<img src="images/temp/S-001-3_s.jpg" alt="" class="cover">
-									<div class="look_price">¥134.99</div>
-								</a>
-								<a class="picked-item" href="">
-									<img src="images/temp/S-001-4_s.jpg" alt="" class="cover">
-									<div class="look_price">¥134.99</div>
-								</a>
-								<a class="picked-item" href="">
-									<img src="images/temp/S-001-5_s.jpg" alt="" class="cover">
-									<div class="look_price">¥134.99</div>
-								</a>
-								<a class="picked-item" href="">
-									<img src="images/temp/S-001-5_s.jpg" alt="" class="cover">
-									<div class="look_price">¥134.99</div>
-								</a>
+								<%
+									list = recommend.getHotGoods("");
+									list = list.subList(4, 8);
+									if (list != null) {
+										for (Goods hotgoods : list) {
+								%>										
+											<a class="picked-item" href="<%=request.getContextPath() %>/GoodsDetailServlet?goods_id=<%=hotgoods.getGoods_id() %>">
+												<img src="<%=hotgoods.getGoods_cover() %>" alt="<%=hotgoods.getGoods_name()%>" class="cover">
+												<div class="look_price">¥<%=hotgoods.getGoods_price()%></div>
+											</a>																
+								<%
+										}
+									}
+								%>
 							</div>
 						</div>
 					</div>
@@ -1474,7 +1443,7 @@
 			<li class="r-toolbar-item">
 				<a href="udai_shopcart.html" class="r-item-hd">
 					<i class="iconfont icon-cart"></i>
-					<div class="r-tip__box"><span class="r-tip-text">购物车</span></div>
+					<div class="r-tip__box"><span class="r-tip-text" id="shopCart">购物车</span></div>
 				</a>
 			</li>
 			<li class="r-toolbar-item">

@@ -92,8 +92,8 @@
 	                    		现在您可以
 	                    	</div>
 	                    	<div class="buts-box">
-	                    		<a role="button" href="<%=request.getContextPath() %>/index.jsp" class="btn btn-block btn-lg btn-default">继续访问商城</a>
-								<a role="button" href="<%=request.getContextPath() %>/udai_welcome.jsp" class="btn btn-block btn-lg btn-info">登录会员中心</a>
+	                    		<a role="button" id = "shop" href="<%=request.getContextPath() %>/index.jsp" class="btn btn-block btn-lg btn-default">继续访问商城</a>
+	                    		<a role="button" href="<%=request.getContextPath() %>/udai_welcome.jsp" class="btn btn-block btn-lg btn-info">登录会员中心</a>
 	                    	</div>
 	                    </div>
                     </div>
