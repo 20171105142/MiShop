@@ -1,5 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="cn.edu.imnu.mishop.bean.Cart"%>
+<%@ page import="cn.edu.imnu.mishop.bean.Users"%>
+<%@ page import="java.util.List"%>
+<%@ page import="java.util.Set"%>
+<jsp:useBean id="myCart"
+	class="cn.edu.imnu.mishop.dao.CartDAO" scope="request">
+</jsp:useBean>
 <html lang="zh-cmn-Hans">
 <head>
 	<meta charset="UTF-8">
@@ -23,7 +30,7 @@
 	<div class="bgf5 clearfix">
 		<div class="top-user">
 			<div class="inner">
-				<a class="logo" href="index.html"><img src="../images/icons/logo.jpg" alt="U袋网" class="cover"></a>
+				<a class="logo" href="../index.jsp"><img src="../images/icons/logo.jpg" alt="U袋网" class="cover"></a>
 				<div class="title">购物车</div>
 			</div>
 		</div>
@@ -32,98 +39,118 @@
 		<section class="user-center inner clearfix">
 			<div class="user-content__box clearfix bgf">
 				<div class="title">购物车</div>
-				<form action="udai_shopcart_pay.html" class="shopcart-form__box">
+				
 					<table class="table table-bordered">
-						<thead>
-							<tr>
-								<th width="150">
-									<label class="checked-label"><input type="checkbox" class="check-all"><i></i> 全选</label>
-								</th>
-								<th width="300">商品信息</th>
-								<th width="150">单价</th>
-								<th width="200">数量</th>
-								<th width="200">现价</th>
-								<th width="80">操作</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<th scope="row">
-									<label class="checked-label"><input type="checkbox"><i></i>
-										<div class="img"><img src="../images/temp/M-003.jpg" alt="" class="cover"></div>
-									</label>
-								</th>
-								<td>
-									<div class="name ep3">锦瑟 原创传统日常汉服男绣花交领衣裳cp情侣装春夏款</div>
-									<div class="type c9">颜色分类：深棕色  尺码：均码</div>
-								</td>
-								<td>¥20.0</td>
-								<td>
-									<div class="cart-num__box">
-										<input type="button" class="sub" value="-">
-										<input type="text" class="val" value="1" maxlength="2">
-										<input type="button" class="add" value="+">
+							<%
+								Users users = (Users)session.getAttribute("SESSION_USERS");
+								List<Cart> list = myCart.getCartGoods(users.getUsers_id());
+								if (!list.isEmpty()) {
+							%>
+									<thead>
+										<tr>
+											<th width="150">
+												<label class="checked-label"><input type="checkbox" class="check-all"><i></i> 全选</label>
+											</th>
+											<th width="300">商品信息</th>
+											<th width="150">单价</th>
+											<th width="200">数量</th>
+											<th width="200">现价</th>
+											<th width="80">操作</th>
+										</tr>
+									</thead>
+							<%
+									for (Cart cart : list) {
+							%>
+								<tbody>
+									<tr>
+										<th scope="row">
+											<label class="checked-label"><input type="checkbox"><i></i>
+												<div class="img"><img src="../<%=cart.getGoods_cover() %>" style="width:126px;height:126px;" alt="<%=cart.getGoods_name() %>" class="cover"></div>
+											</label>
+										</th>
+										<td>
+											<div class="name ep3"><%=cart.getGoods_name() %></div>
+											<div class="type c9">颜色分类：<%=cart.getGoods_color() %>  尺码：<%=cart.getGoods_size() %></div>
+										</td>
+										<td>¥<%=cart.getGoods_price() %></td>
+										<td>
+											<div class="cart-num__box">
+												<input type="button" class="sub" value="-">
+												<input type="text" class="val" value="<%=cart.getGoods_amout() %>" maxlength="2">
+												<input type="button" class="add" value="+">
+											</div>
+										</td>
+										<td>¥<%=cart.getGoods_price() %></td>
+										<td><a href="">删除</a></td>
+									</tr>	
+								</tbody>
+														
+							<%
+									}
+							%>
+								</table>
+								<div class="user-form-group tags-box shopcart-submit pull-right">
+									<button type="submit" class="btn">提交订单</button>
+								</div>
+								<div class="checkbox shopcart-total">
+									<label><input type="checkbox" class="check-all"><i></i> 全选</label>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="">删除</a>
+									<div class="pull-right">
+										已选商品 <span>2</span> 件
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;合计（不含运费）
+										<b class="cr">¥<span class="fz24">40.00</span></b>
 									</div>
-								</td>
-								<td>¥20.0</td>
-								<td><a href="">删除</a></td>
-							</tr>
-							<tr>
-								<th scope="row">
-									<label class="checked-label"><input type="checkbox"><i></i>
-										<div class="img"><img src="../images/temp/S-005.jpg" alt="" class="cover"></div>
-									</label>
-								</th>
-								<td>
-									<div class="name ep3">霜天月明 原创传统日常汉服男绣花交领衣裳cp春装单品</div>
-									<div class="type c9">颜色分类：深棕色  尺码：均码</div>
-								</td>
-								<td>¥20.0</td>
-								<td>
-									<div class="cart-num__box">
-										<input type="button" class="sub" value="-">
-										<input type="text" class="val" value="1" maxlength="2">
-										<input type="button" class="add" value="+">
-									</div>
-								</td>
-								<td>¥20.0</td>
-								<td><a href="">删除</a></td>
-							</tr>
-							<tr>
-								<th scope="row">
-									<label class="checked-label"><input type="checkbox"><i></i>
-										<div class="img"><img src="../images/temp/M-007.jpg" alt="" class="cover"></div>
-									</label>
-								</th>
-								<td>
-									<div class="name ep3">陇上乐 原创传统日常汉服男绣花单大氅大袖衫cp情侣春秋</div>
-									<div class="type c9">颜色分类：深棕色  尺码：均码</div>
-								</td>
-								<td>¥20.0</td>
-								<td>
-									<div class="cart-num__box">
-										<input type="button" class="sub" value="-">
-										<input type="text" class="val" value="1" maxlength="2">
-										<input type="button" class="add" value="+">
-									</div>
-								</td>
-								<td>¥20.0</td>
-								<td><a href="">删除</a></td>
-							</tr>
-						</tbody>
-					</table>
-					<div class="user-form-group tags-box shopcart-submit pull-right">
-						<button type="submit" class="btn">提交订单</button>
-					</div>
-					<div class="checkbox shopcart-total">
-						<label><input type="checkbox" class="check-all"><i></i> 全选</label>
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="">删除</a>
-						<div class="pull-right">
-							已选商品 <span>2</span> 件
-							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;合计（不含运费）
-							<b class="cr">¥<span class="fz24">40.00</span></b>
-						</div>
-					</div>
+								</div>
+							<%
+								} else {
+							%>
+							<div class="tips">
+									<img alt="" class="tipsImg" src="../images/timg.gif">
+									
+										<p class="tipstext">您的购物车是空的哦~<br />去看看心仪的商品吧~</p>
+										<a href="../index.jsp"><button class="tipshref">立即去购物</button></a>
+							</div>
+							<style>
+								.tips{
+									width:1100px;
+									height:450px;
+									position: relative;
+								}
+							
+								.tipsImg{
+									height: 80%;
+									float:left;						
+								}
+								.tipstext{
+									float:left;
+									height:26px;
+									line-height: 26px;
+									font-size: 25px;
+									font-family: "microsoft yahei";
+									height: 80px;
+									line-height:40px;
+									text-align: center;
+									position: absolute;
+								    top: 120px;
+								    right: 160px;
+								}
+								.tipshref{
+									position: absolute;
+								    top: 220px;
+								    right: 245px;
+								    height:35px;
+								    width:90px;
+								    background-color:#b31e22;
+								    border:1px solid #b31e22;
+								    color:#fff;
+								    line-height:35px;
+								}
+							</style>
+							<%
+								}
+							%>							
+						
+					
 					<script>
 						$(document).ready(function(){
 							var $item_checkboxs = $('.shopcart-form__box tbody input[type="checkbox"]'),
@@ -154,7 +181,7 @@
 							});
 						});
 					</script>
-				</form>
+			
 			</div>
 		</section>
 	</div>
@@ -162,13 +189,13 @@
 	<div class="right-nav">
 		<ul class="r-with-gotop">
 			<li class="r-toolbar-item">
-				<a href="udai_welcome.html" class="r-item-hd">
+				<a href="../udai_welcome.jsp" class="r-item-hd">
 					<i class="iconfont icon-user" data-badge="0"></i>
 					<div class="r-tip__box"><span class="r-tip-text">用户中心</span></div>
 				</a>
 			</li>
 			<li class="r-toolbar-item">
-				<a href="udai_shopcart.html" class="r-item-hd">
+				<a href="../udai_shopcart.jsp" class="r-item-hd">
 					<i class="iconfont icon-cart"></i>
 					<div class="r-tip__box"><span class="r-tip-text">购物车</span></div>
 				</a>

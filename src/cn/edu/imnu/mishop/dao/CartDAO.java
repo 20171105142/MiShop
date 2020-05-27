@@ -4,7 +4,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
+import cn.edu.imnu.mishop.bean.Cart;
 import cn.edu.imnu.mishop.util.DBUtil;
 
 public class CartDAO {
@@ -90,5 +93,37 @@ public class CartDAO {
 		}
 		return status;
 	}
-
+	
+	public List<Cart> getCartGoods(int users_id) {
+		// TODO Auto-generated method stub
+		Connection conn = DBUtil.getConnection();
+		PreparedStatement pstmt = null;
+		List<Cart> list = new ArrayList<Cart>();
+		ResultSet result = null;
+		String sql = "SELECT carts_goodsid, goods_name, goods_cover, carts_goodscolor, goods_price,"
+				+ "carts_goodssize, carts_goodsamout FROM tb_carts,tb_goods WHERE "
+				+ "carts_userid = ? AND goods_id = carts_goodsid";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, users_id);
+			result = pstmt.executeQuery();
+			while(result.next()) {
+				Cart cart = new Cart();
+				cart.setGoods_id(result.getInt("carts_goodsid"));;
+				cart.setGoods_name(result.getString("goods_name"));
+				cart.setGoods_cover(result.getString("goods_cover"));
+				cart.setGoods_price(result.getDouble("goods_price"));
+				cart.setGoods_color(result.getString("carts_goodscolor"));
+				cart.setGoods_size(result.getString("carts_goodssize"));
+				cart.setGoods_amout(result.getInt("carts_goodsamout"));;
+				list.add(cart);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			DBUtil.closeJDBC(null, pstmt, conn);
+		}
+		return list;
+	}
 }
