@@ -1,6 +1,5 @@
 package cn.edu.imnu.mishop.util;
 
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -59,31 +58,8 @@ import java.sql.Statement;
 		}
 	}
 	
-	public static void runTest() throws SQLException,IOException{
-		Connection conn=getConnection();
-		Statement stmt =conn.createStatement();
-		ResultSet result = stmt.executeQuery("select * from tb_company");
-		while (result.next()){
-			System.out.print(result.getString(2)+"    ");
-			System.out.print(result.getString(3)+"    ");
-			System.out.print(result.getString(5)+"    ");
-			System.out.println(result.getString(6));
-		}
-		closeJDBC(result,stmt,conn);
-	}
+	
 
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		try {
-			runTest();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-	}
+	
 
 }

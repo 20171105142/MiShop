@@ -39,68 +39,74 @@
 		<section class="user-center inner clearfix">
 			<div class="user-content__box clearfix bgf">
 				<div class="title">购物车</div>
-				
+					
 					<table class="table table-bordered">
 							<%
 								Users users = (Users)session.getAttribute("SESSION_USERS");
 								List<Cart> list = myCart.getCartGoods(users.getUsers_id());
 								if (!list.isEmpty()) {
 							%>
-									<thead>
+									<form action="">
+										<thead>
+											<tr>
+												<th width="150">
+													<label class="checked-label"><input type="checkbox" class="check-all"><i></i> 全选</label>
+												</th>
+												<th width="300">商品信息</th>
+												<th width="150">单价</th>
+												<th width="200">数量</th>
+												<th width="200">现价</th>
+												<th width="80">操作</th>
+											</tr>
+										</thead>
+								<%
+										for (Cart cart : list) {
+								%>
+									<tbody>
 										<tr>
-											<th width="150">
-												<label class="checked-label"><input type="checkbox" class="check-all"><i></i> 全选</label>
+											<th scope="row">
+												<label class="checked-label"><input type="checkbox" name="check"><i></i>
+													<div class="img"><img src="../<%=cart.getGoods_cover() %>" style="width:126px;height:126px;" alt="<%=cart.getGoods_name() %>" class="cover"></div>
+												</label>
 											</th>
-											<th width="300">商品信息</th>
-											<th width="150">单价</th>
-											<th width="200">数量</th>
-											<th width="200">现价</th>
-											<th width="80">操作</th>
-										</tr>
-									</thead>
-							<%
-									for (Cart cart : list) {
-							%>
-								<tbody>
-									<tr>
-										<th scope="row">
-											<label class="checked-label"><input type="checkbox"><i></i>
-												<div class="img"><img src="../<%=cart.getGoods_cover() %>" style="width:126px;height:126px;" alt="<%=cart.getGoods_name() %>" class="cover"></div>
-											</label>
-										</th>
-										<td>
-											<div class="name ep3"><%=cart.getGoods_name() %></div>
-											<div class="type c9">颜色分类：<%=cart.getGoods_color() %>  尺码：<%=cart.getGoods_size() %></div>
-										</td>
-										<td>¥<%=cart.getGoods_price() %></td>
-										<td>
-											<div class="cart-num__box">
-												<input type="button" class="sub" value="-">
-												<input type="text" class="val" value="<%=cart.getGoods_amout() %>" maxlength="2">
-												<input type="button" class="add" value="+">
-											</div>
-										</td>
-										<td>¥<%=cart.getGoods_price() %></td>
-										<td><a href="">删除</a></td>
-									</tr>	
-								</tbody>
-														
-							<%
-									}
-							%>
-								</table>
-								<div class="user-form-group tags-box shopcart-submit pull-right">
-									<button type="submit" class="btn">提交订单</button>
-								</div>
-								<div class="checkbox shopcart-total">
-									<label><input type="checkbox" class="check-all"><i></i> 全选</label>
-									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="">删除</a>
-									<div class="pull-right">
-										已选商品 <span>2</span> 件
-										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;合计（不含运费）
-										<b class="cr">¥<span class="fz24">40.00</span></b>
+											<td>
+												<div class="name ep3"><%=cart.getGoods_name() %></div>
+												<div class="type c9" goodscolor="<%=cart.getGoods_color() %>" goodssize="<%=cart.getGoods_size() %>">颜色分类：<%=cart.getGoods_color() %>  尺码：<%=cart.getGoods_size() %></div>
+											</td>
+											<td class="price" value="<%=cart.getGoods_price() %>">¥<%=cart.getGoods_price() %></td>
+											<td>
+												<div class="cart-num__box" goodsid="<%=cart.getGoods_id()%>">
+													<input type="button" class="sub" value="-" >
+													<input type="text" class="val" value="<%=cart.getGoods_amout() %>" maxlength="2">
+													<input type="button" class="add" value="+" >
+												</div>
+											</td>
+											<td class="price" value="<%=cart.getGoods_price() %>" >¥<%=cart.getGoods_price() %></td>
+											<td><a href="" class="del">删除</a></td>
+										</tr>	
+									</tbody>
+															
+								<%
+										}
+								%>
+									</table>
+									<div class="user-form-group tags-box shopcart-submit pull-right">
+										<button type="submit" class="btn">提交订单</button>
 									</div>
-								</div>
+									<div class="checkbox shopcart-total">
+										<label><input type="checkbox" class="check-all"><i></i> 全选</label>
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="" class="alldel">删除</a>
+										<div class="pull-right">
+											已选商品 <span class="checkAmout">0</span> 件
+											&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;合计（不含运费）
+											<b class="cr">¥<span class="fz24" >0.00</span></b>
+										</div>
+									</div>
+								</form>
+								<script type="text/javascript">
+								
+								
+								</script>
 							<%
 								} else {
 							%>
@@ -178,6 +184,134 @@
 								} else {
 									$(this).siblings('.val').val(Math.max((value -= 1),1));
 								}
+							});
+							$(document).ready(function() {
+								$(".alldel").click(function(){
+									$("input[name='check']").each(function () {
+										if ($(this).is(":checked")) {
+											var thisParents = $(this).parents().parents().siblings()
+											var goodsid = thisParents.children(".cart-num__box").attr("goodsid")
+											var goodscolor = thisParents.children(".type").attr("goodscolor")
+											var goodssize = thisParents.children(".type").attr("goodssize")
+											var goodsamout = thisParents.children(".cart-num__box").children(".val").attr("value")
+											$(function(){
+												$.changeGoodsAmout("del", goodsid, goodscolor, goodssize, goodsamout)
+											});
+				                        }
+						               });
+								});
+								$(".check-all").click(function(){
+									var flag = this.checked;
+									var total = 0
+									if($(this).is(':checked')){
+										$("input[name='check']").each(function(){								
+											var price = $(this).parents().siblings(".price").attr("value")
+											var amout = $(this).parents().siblings().children('.cart-num__box').children(".val").attr("value")
+											total = total + price * amout											
+											this.checked = flag											
+										});
+										$(".fz24").text(total.toFixed(2))
+										$(".checkAmout").html($('input[type=checkbox]:checked').length - 1)
+									} else {
+										$("input[name='check']").each(function(){
+											this.checked = flag
+											$(".fz24").text("0.00")
+										});
+										$(".checkAmout").html($('input[type=checkbox]:checked').length - 1)
+									}										
+								});
+								$("input[name='check']").click(function(){
+									$(".checkAmout").html($('input[type=checkbox]:checked').length)
+									var price = $(this).parents().siblings(".price").attr("value")
+									var amout = $(this).parents().siblings().children('.cart-num__box').children(".val").attr("value")
+									if($(this).is(':checked')) {
+										$(function(){
+											$.totalPrice(price, amout)
+										});
+									} else {
+										$(function(){
+											$.subPrice(price, amout)
+										});
+									}
+								});
+								$(".add").click(function(){
+									var thisParents = $(this).parents('.cart-num__box')
+									var goodsid = thisParents.attr("goodsid")
+									var goodscolor = thisParents.parents().prevAll().children(".type").attr("goodscolor")
+									var goodssize = thisParents.parents().prevAll().children(".type").attr("goodssize")
+									var goodsamout = $(this).siblings(".val").attr("value")
+									$(function(){
+										$.changeGoodsAmout("add", goodsid, goodscolor, goodssize,goodsamout)
+									});
+									if($(this).parents().parents().siblings().children().children("input[name='check']").is(':checked')){
+										var price = $(this).parents().parents().siblings(".price").attr("value")
+										var amout = 1
+										$(function(){
+											$.totalPrice(price, amout)
+										});
+									}
+									
+								});
+								$(".sub").click(function(){
+									var thisParents = $(this).parents('.cart-num__box')
+									var goodsid = thisParents.attr("goodsid")
+									var goodscolor = thisParents.parents().prevAll().children(".type").attr("goodscolor")
+									var goodssize = thisParents.parents().prevAll().children(".type").attr("goodssize")
+									var goodsamout = $(this).siblings(".val").attr("value")
+									$(function(){
+										$.changeGoodsAmout("sub", goodsid, goodscolor, goodssize,goodsamout)
+									});
+									if($(this).parents().parents().siblings().children().children("input[name='check']").is(':checked')){
+										var price = $(this).parents().parents().siblings(".price").attr("value")
+										var amout = 1
+										$(function(){
+											$.subPrice(price, amout)
+										});
+									}
+								});
+								$(".del").click(function(){
+									var thisSiblings = $(this).parents().siblings()
+									var goodsid = thisSiblings.children(".cart-num__box").attr("goodsid")
+									var goodscolor = thisSiblings.children(".type").attr("goodscolor")
+									var goodssize = thisSiblings.children(".type").attr("goodssize")
+									var goodsamout = thisSiblings.children(".cart-num__box").children(".val").attr("value")
+									$(function(){
+										$.changeGoodsAmout("del", goodsid, goodscolor, goodssize, goodsamout)
+									});
+								});
+								(function($){
+									$.changeGoodsAmout =  function(type, goodsid, goodscolor, goodssize, goodsamout){
+										$.ajax({
+								            url: "<%=request.getContextPath() %>/AddCartAmoutServlet",			
+								            type: "post",    
+								            data:{
+								            	goodstype: type,
+								            	userid: <%=users.getUsers_id() %>,
+								            	goodsid: goodsid,
+								            	goodscolor: goodscolor,
+								            	goodssize: goodssize,
+								            	goodsamout: goodsamout
+								            },				
+								            error:function(data){
+								            	console.log("change cart amout", data)
+								            },
+								            success:function(data){
+								            	console.log("change cart amout", data)
+								            }
+								        });
+								};
+								$.totalPrice =  function (price, amout){
+									var currprice = parseInt($(".fz24").text())
+									var total = (price * amout + currprice).toFixed(2)
+									$(".fz24").text(total)
+								};
+								$.subPrice =  function (price, amout){
+									var currprice = parseInt($(".fz24").text())
+									var total = (currprice - price * amout).toFixed(2)
+									$(".fz24").text(total)
+								};
+								})(jQuery)
+								
 							});
 						});
 					</script>

@@ -95,4 +95,27 @@ import cn.edu.imnu.mishop.util.DBUtil;
 			}
 			return UserID;
 		}
+
+		public int cartAmout(int userID) {
+			// TODO Auto-generated method stub
+			Connection conn = DBUtil.getConnection();
+			PreparedStatement pstmt = null;
+			ResultSet result = null;
+			String sql = "SELECT COUNT(*) FROM tb_carts WHERE carts_userid = ?";
+			int cartAmout = 0;
+			try {
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, userID);
+				result = pstmt.executeQuery();
+				if(result.next()) {
+					cartAmout = result.getInt(1);
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} finally {
+				DBUtil.closeJDBC(result, pstmt, conn);
+			}
+			return cartAmout;
+		}
 	}

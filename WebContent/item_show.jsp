@@ -267,7 +267,6 @@
 										Users users = (Users)session.getAttribute("SESSION_USERS");
 										if(users != null){
 									%>
-											var form = $(this).parents('form')
 											var color = $(".on:first").attr("data-value")
 											var size = $(".on:last").attr("data-value")
 											var amount = $('.amount-input').val()

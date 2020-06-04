@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import = "cn.edu.imnu.mishop.bean.Users" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -32,7 +33,18 @@
 			</div>
 			<div class="cart-box">
 				<a href="cart/udai_shopcart.jsp" class="cart-but">
-					<i class="iconfont icon-shopcart cr fz16"></i> 购物车 0 件
+					<%
+						Users sessionUsers = (Users)session.getAttribute("SESSION_USERS");
+						if(sessionUsers == null){
+					%>
+						<i class="iconfont icon-shopcart cr fz16"></i> 购物车 0 件
+					<%
+						} else {
+					%>
+						<i class="iconfont icon-shopcart cr fz16"></i> 购物车 <%=sessionUsers.getCartAmout() %> 件
+					<%
+						}
+					%>
 				</a>
 			</div>
 		</div>

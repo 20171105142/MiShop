@@ -44,6 +44,7 @@ public class LoginServlet extends HttpServlet {
 		String phone = request.getParameter("phone");
 		String password = request.getParameter("password");
 		String remeberMe = request.getParameter("remeberMe");
+		
 		UsersDAO dao = new UsersDAO();
 		int UserID = dao.login(phone, password);
 		
@@ -51,7 +52,8 @@ public class LoginServlet extends HttpServlet {
 		
 		object1.put("type", "login");
 		if(UserID!=0) {
-			Users users = new Users(UserID, phone,password);
+			int cartAmout = dao.cartAmout(UserID);
+			Users users = new Users(UserID, phone, password, cartAmout);
 			session.setAttribute("SESSION_USERS", users);
 			session.setMaxInactiveInterval(60*10);
 			remeberMe(remeberMe, phone, password, request, response);

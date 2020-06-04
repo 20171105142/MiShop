@@ -8,10 +8,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.alibaba.fastjson.JSONObject;
 
+import cn.edu.imnu.mishop.bean.Users;
 import cn.edu.imnu.mishop.dao.CartDAO;
+import cn.edu.imnu.mishop.dao.UsersDAO;
 
 /**
  * Servlet implementation class AddCartServlet
@@ -36,6 +39,7 @@ public class AddCartServlet extends HttpServlet {
 //		response.getWriter().append("Served at: ").append(request.getContextPath());
 		JSONObject object1 = new JSONObject();
 		CartDAO cart = new CartDAO();
+		UsersDAO dao = new UsersDAO();
 		PrintWriter out = response.getWriter();
 		
 		int users_id = Integer.parseInt(request.getParameter("userid"));
@@ -43,13 +47,21 @@ public class AddCartServlet extends HttpServlet {
 		String goods_color = request.getParameter("color");
 		String goods_size = request.getParameter("size");
 		int goods_amout = Integer.parseInt(request.getParameter("amount"));
+		HttpSession session = request.getSession();
+		Users users = (Users)session.getAttribute("SESSION_USERS");
+		object1.put("type", "add cart goods");
 		int status = 0;
 		int amout = cart.isGoods(users_id, goods_id, goods_color, goods_size);
 		if(amout == 0) {
 			status = cart.addCart(users_id, goods_id, goods_color, goods_size, goods_amout);
+			int cartAmout = dao.cartAmout(users_id);
+			users.setCartAmout(cartAmout);
 		} else {
+			int cartAmout = dao.cartAmout(users_id);
+			users.setCartAmout(cartAmout);
 			status = cart.updateCart(users_id, goods_id, goods_color, goods_size, goods_amout, amout);
 		}
+		session.setAttribute("SESSION_USERS", users);
 		if( status != 0) {
 			object1.put("status", status);
 		} else {
