@@ -12,9 +12,10 @@ import cn.edu.imnu.mishop.bean.Goods;
 import cn.edu.imnu.mishop.util.DBUtil;
 
 public class GoodsDAO {
-
+	//GoodsDAO
 	public int getrecordCount() {
 		// TODO Auto-generated method stub
+		//获取商品总数
 		int recordCount = 0;
 		
 		String sql = "SELECT COUNT(*) FROM tb_goods";
@@ -41,6 +42,7 @@ public class GoodsDAO {
 	
 	public List<Goods> getGoodsPageList(int pageNo, int pageSize) {
 		// TODO Auto-generated method stub
+		//获取商品列表
 		int firstIndex = pageSize * (pageNo - 1);
 		List<Goods> list = new ArrayList<Goods>();
 		
@@ -61,6 +63,7 @@ public class GoodsDAO {
 				goods.setGoods_id(result.getInt("goods_id"));
 				goods.setGoods_name(result.getString("goods_name"));
 				goods.setGoods_price(result.getString("goods_price"));
+				goods.setGoods_sale(result.getString("goods_sale"));
 				goods.setGoods_cover(result.getString("goods_cover"));
 				list.add(goods);
 			}
@@ -73,7 +76,9 @@ public class GoodsDAO {
 		
 		return list;
 	}
+	//GoodsDAO
 	public Goods getGoodsDetail(int goods_id){
+		//商品详细信息获取
 		String sql = "SELECT * FROM tb_goods WHERE goods_id = ?";
 		Goods goods = new Goods();
 		Connection conn = DBUtil.getConnection();

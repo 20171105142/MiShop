@@ -15,17 +15,20 @@ public class GoodsPageBean {
 	private List<Goods> pageDate = new ArrayList<Goods>();
 	private boolean hasNextPage;
 	private boolean hasPreviousPage;
-	
+	//分页部分函数
 	public int getTotalPages() {
+		//获取总页数
 		int recordCount = getTotalGoods();
 		return (recordCount + pageSize - 1) / pageSize;
 	}
 	public int getTotalGoods() {
+		//获取商品总数
 		GoodsDAO dao = new GoodsDAO();
 		int recordCount = dao.getrecordCount();
 		return recordCount;
 	}
 	public List<Goods> getPageDate() {
+		//获取全部商品
 		GoodsDAO dao = new GoodsDAO();
 		List<Goods> list = dao.getGoodsPageList(pageNo, pageSize);
 		return list;

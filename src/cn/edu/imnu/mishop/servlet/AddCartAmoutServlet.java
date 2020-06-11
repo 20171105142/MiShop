@@ -37,6 +37,8 @@ public class AddCartAmoutServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 //		response.getWriter().append("Served at: ").append(request.getContextPath());
+		//AddCartAmoutServlet
+		//购物车商品数量修改
 		JSONObject object1 = new JSONObject();
 		CartDAO cart = new CartDAO();
 		UsersDAO dao = new UsersDAO();

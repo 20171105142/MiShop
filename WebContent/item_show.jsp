@@ -262,6 +262,7 @@
 						</form>
 						<script>
 							$(document).ready(function() {
+								//ajax添加购物车
 								$(".item-action__basket").click(function(){
 									<%	
 										Users users = (Users)session.getAttribute("SESSION_USERS");

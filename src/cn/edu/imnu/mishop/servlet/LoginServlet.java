@@ -38,24 +38,27 @@ public class LoginServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 //		response.getWriter().append("Served at: ").append(request.getContextPath());
+		//LoginServlet
 		PrintWriter out = response.getWriter();
 		JSONObject object1 = new JSONObject();
-		
+		//获取用户输入数据
 		String phone = request.getParameter("phone");
 		String password = request.getParameter("password");
 		String remeberMe = request.getParameter("remeberMe");
 		
 		UsersDAO dao = new UsersDAO();
+		//验证手机号和密码返回UserID
 		int UserID = dao.login(phone, password);
-		
+		//创建session
 		HttpSession session = request.getSession();
 		
 		object1.put("type", "login");
 		if(UserID!=0) {
+			//用户存在 将用户信息存入session
 			int cartAmout = dao.cartAmout(UserID);
 			Users users = new Users(UserID, phone, password, cartAmout);
 			session.setAttribute("SESSION_USERS", users);
-			session.setMaxInactiveInterval(60*10);
+			session.setMaxInactiveInterval(60 * 60 * 24 * 30);
 			remeberMe(remeberMe, phone, password, request, response);
 			object1.put("status", "1");
 		} else {
@@ -66,10 +69,11 @@ public class LoginServlet extends HttpServlet {
 	private void remeberMe(String remeberMe, String usersname, String password, HttpServletRequest request,
 			HttpServletResponse response) {
 		// TODO Auto-generated method stub
+		//将用户手机号和密码存入Cookie实现记住密码
 		if("true".equals(remeberMe)) {
 			Cookie cookie = new Cookie("COKKIE_USERSPHONE",usersname);
 			cookie.setPath("/");
-			cookie.setMaxAge(60*60*24*30);
+			cookie.setMaxAge(60 * 60 * 24 * 30);
 			response.addCookie(cookie);
 			
 			cookie = new Cookie("COKKIE_USERSPWD",password);

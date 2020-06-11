@@ -142,10 +142,13 @@
 		<section class="item-show__div clearfix">
 			<div class="pull-left">
 				<div class="item-list__area clearfix">
+					<!-- 商品列表输出 -->
 					<%
 						List<Goods> list = pagination.getPageDate();
+						//获取商品列表
 						if (list != null) {
 							for (Goods goods : list) {
+								//商品属性展示
 					%>
 					<div class="item-card">
 						<a href="<%=request.getContextPath()%>/GoodsDetailServlet?goods_id=<%=goods.getGoods_id()%>" class="photo">

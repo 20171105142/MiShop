@@ -279,6 +279,7 @@
 										$.changeGoodsAmout("del", goodsid, goodscolor, goodssize, goodsamout)
 									});
 								});
+								//ajax修改购物车商品数量
 								(function($){
 									$.changeGoodsAmout =  function(type, goodsid, goodscolor, goodssize, goodsamout){
 										$.ajax({

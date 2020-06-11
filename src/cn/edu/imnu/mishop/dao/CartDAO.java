@@ -14,6 +14,8 @@ public class CartDAO {
 
 	public int addCart(int users_id, int goods_id, String goods_color, String goods_size, int goods_amout) {
 		// TODO Auto-generated method stub
+		//CartDAO
+		//添加购物车商品
 		Connection conn = DBUtil.getConnection();
 		PreparedStatement pstmt = null;
 		
@@ -41,6 +43,7 @@ public class CartDAO {
 
 	public int isGoods(int users_id, int goods_id, String goods_color, String goods_size) {
 		// TODO Auto-generated method stub
+		//判断购物车是否有此商品
 		Connection conn = DBUtil.getConnection();
 		PreparedStatement pstmt = null;
 		ResultSet result = null;
@@ -69,6 +72,8 @@ public class CartDAO {
 
 	public int updateCart(int users_id, int goods_id, String goods_color, String goods_size, int goods_amout, int amout) {
 		// TODO Auto-generated method stub
+		//CartDAO
+		//修改购物车商品数量
 		Connection conn = DBUtil.getConnection();
 		PreparedStatement pstmt = null;
 		

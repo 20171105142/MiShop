@@ -5,6 +5,8 @@ public class Users {
 	private int Users_id;
 	private String Users_phone;
 	private String Users_password;
+	private String Users_sex;
+	private String Users_birthday;
 	private int cartAmout;
 	public String getUsers_phone() {
 		return Users_phone;
@@ -25,6 +27,9 @@ public class Users {
 		this.Users_password = Users_password;
 		this.cartAmout = cartAmout;
 	}
+	public Users() {
+		// TODO Auto-generated constructor stub
+	}
 	public int getUsers_id() {
 		return Users_id;
 	}
@@ -36,5 +41,17 @@ public class Users {
 	}
 	public void setCartAmout(int cartAmout) {
 		this.cartAmout = cartAmout;
+	}
+	public String getUsers_sex() {
+		return Users_sex;
+	}
+	public void setUsers_sex(String users_sex) {
+		Users_sex = users_sex;
+	}
+	public String getUsers_birthday() {
+		return Users_birthday;
+	}
+	public void setUsers_birthday(String users_birthday) {
+		Users_birthday = users_birthday;
 	}
 }
