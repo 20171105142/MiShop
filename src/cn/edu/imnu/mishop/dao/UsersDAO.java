@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import cn.edu.imnu.mishop.bean.Address;
 import cn.edu.imnu.mishop.bean.Goods;
 import cn.edu.imnu.mishop.bean.Users;
 import cn.edu.imnu.mishop.util.DBUtil;
@@ -169,5 +170,33 @@ import cn.edu.imnu.mishop.util.DBUtil;
 				DBUtil.closeJDBC(result, pstmt, conn);
 			}
 			return users;
+		}
+		public List<Address> getUsersAddress(int users_id){
+			List<Address> list = new ArrayList<Address>();
+			
+			String sql = "SELECT * FROM	tb_addresses WHERE addresses_userId = ? ORDER BY addresses_isDefaultAddress DESC;";
+			Connection conn = DBUtil.getConnection();
+			PreparedStatement pstmt = null;
+			ResultSet result = null;
+			try {			
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, users_id);
+				result = pstmt.executeQuery();
+				while(result.next()) {
+					Address address = new Address();
+					address.setAddresses_receiverName(result.getString("addresses_receiverName"));
+					address.setAddresses_receiverAddress(result.getString("addresses_receiverAddress"));
+					address.setAddresses_receiverDetailAddress(result.getString("addresses_receiverDetailAddress"));
+					address.setAddresses_receiverPhone(result.getString("addresses_receiverPhone"));
+					address.setAddresses_isDefaultAddress(result.getInt("addresses_isDefaultAddress"));
+					list.add(address);
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} finally {
+				DBUtil.closeJDBC(result, pstmt, conn);
+			}
+			return list;
 		}
 }

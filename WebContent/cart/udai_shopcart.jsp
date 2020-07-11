@@ -1,8 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="cn.edu.imnu.mishop.bean.Cart"%>
+<%@ page import="cn.edu.imnu.mishop.bean.Goods"%>
 <%@ page import="cn.edu.imnu.mishop.bean.Users"%>
 <%@ page import="java.util.List"%>
+<%@ page import="java.util.ArrayList"%>
 <%@ page import="java.util.Set"%>
 <jsp:useBean id="myCart"
 	class="cn.edu.imnu.mishop.dao.CartDAO" scope="request">
@@ -46,31 +48,31 @@
 								List<Cart> list = myCart.getCartGoods(users.getUsers_id());
 								if (!list.isEmpty()) {
 							%>
-									<form action="">
-										<thead>
-											<tr>
-												<th width="150">
-													<label class="checked-label"><input type="checkbox" class="check-all"><i></i> 全选</label>
-												</th>
-												<th width="300">商品信息</th>
-												<th width="150">单价</th>
-												<th width="200">数量</th>
-												<th width="200">现价</th>
-												<th width="80">操作</th>
-											</tr>
-										</thead>
+									
+								<thead>
+									<tr>
+										<th width="150">
+											<label class="checked-label"><input type="checkbox" class="check-all"><i></i> 全选</label>
+										</th>
+										<th width="300">商品信息</th>
+										<th width="150">单价</th>
+										<th width="200">数量</th>
+										<th width="200">现价</th>
+										<th width="80">操作</th>
+									</tr>
+								</thead>
 								<%
 										for (Cart cart : list) {
 								%>
 									<tbody>
 										<tr>
 											<th scope="row">
-												<label class="checked-label"><input type="checkbox" name="check"><i></i>
-													<div class="img"><img src="../<%=cart.getGoods_cover() %>" style="width:126px;height:126px;" alt="<%=cart.getGoods_name() %>" class="cover"></div>
+												<label class="checked-label" qqq="s"><input type="checkbox"  class="check" name="check"><i></i>
+													<div class="img" ><img src="../<%=cart.getGoods_cover() %>" value="../<%=cart.getGoods_cover() %>" style="width:126px;height:126px;" alt="<%=cart.getGoods_name() %>" class="cover"></div>
 												</label>
 											</th>
 											<td>
-												<div class="name ep3"><%=cart.getGoods_name() %></div>
+												<div class="name ep3" id="name" value="<%=cart.getGoods_name() %>"><%=cart.getGoods_name() %></div>
 												<div class="type c9" goodscolor="<%=cart.getGoods_color() %>" goodssize="<%=cart.getGoods_size() %>">颜色分类：<%=cart.getGoods_color() %>  尺码：<%=cart.getGoods_size() %></div>
 											</td>
 											<td class="price" value="<%=cart.getGoods_price() %>">¥<%=cart.getGoods_price() %></td>
@@ -84,14 +86,13 @@
 											<td class="price" value="<%=cart.getGoods_price() %>" >¥<%=cart.getGoods_price() %></td>
 											<td><a href="" class="del">删除</a></td>
 										</tr>	
-									</tbody>
-															
+									</tbody>															
 								<%
-										}
+									}
 								%>
 									</table>
 									<div class="user-form-group tags-box shopcart-submit pull-right">
-										<button type="submit" class="btn">提交订单</button>
+										<button class="btn" >提交订单</button>
 									</div>
 									<div class="checkbox shopcart-total">
 										<label><input type="checkbox" class="check-all"><i></i> 全选</label>
@@ -102,11 +103,7 @@
 											<b class="cr">¥<span class="fz24" >0.00</span></b>
 										</div>
 									</div>
-								</form>
-								<script type="text/javascript">
 								
-								
-								</script>
 							<%
 								} else {
 							%>
@@ -186,6 +183,46 @@
 								}
 							});
 							$(document).ready(function() {
+								$(".btn").click(function(){
+									var list = new Array();
+									var flag = false;
+									$("input[name='check']").each(function () {
+										if ($(this).is(":checked")) {
+											var thisParents = $(this).parents().parents().siblings()
+											var goodsid = thisParents.children(".cart-num__box").attr("goodsid")
+											var goodscover = thisParents.parents().children("th").children(".checked-label").children(".img").children(".cover").attr("value")
+											var goodsname = thisParents.children(".name").attr("value")
+											var goodsprice = thisParents.siblings(".price").attr("value")
+											var goodscolor = thisParents.children(".type").attr("goodscolor")
+											var goodssize = thisParents.children(".type").attr("goodssize")
+											var goodsamout = thisParents.children(".cart-num__box").children(".val").attr("value")
+											list.push({goodsid:goodsid,goodscover:goodscover,goodsname:goodsname,goodsprice:goodsprice,goodscolor:goodscolor,goodssize:goodssize,goodsamout:goodsamout});
+											flag = true;
+				                        } else {
+				                        	flag = false;
+				                        }											
+						              });
+									console.log(flag)
+									if(flag){
+										console.log(list)
+										var json=JSON.stringify(list);
+										$.ajax({
+								             type: "POST",
+								             url: "../OrderInfoServlet",
+								             data: {
+								            	 submit: json
+								            },
+								             dataType: "json",
+								             success: function(data){
+								                        
+								             }
+								         });	
+										window.location.href = "../user/udai_shopcart_pay.jsp";
+									} else {
+										alert("未选择商品");
+									}							
+									
+								});
 								$(".alldel").click(function(){
 									$("input[name='check']").each(function () {
 										if ($(this).is(":checked")) {
@@ -316,7 +353,6 @@
 							});
 						});
 					</script>
-			
 			</div>
 		</section>
 	</div>
